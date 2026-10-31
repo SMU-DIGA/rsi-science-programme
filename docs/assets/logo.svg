@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">RSI-Science</title>
+  <desc id="desc">Neural-symbolic recursive self-improvement for interpretable science discovery. A recursive arrow surrounds neural nodes, symbolic branches and a discovery spark.</desc>
+  <defs>
+    <linearGradient id="navy" x1="180" y1="200" x2="790" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#092C58"/><stop offset="1" stop-color="#052044"/></linearGradient>
+    <linearGradient id="amber" x1="610" y1="100" x2="890" y2="800" gradientUnits="userSpaceOnUse"><stop stop-color="#FFA512"/><stop offset="1" stop-color="#F58A00"/></linearGradient>
+  </defs>
+  <g id="recursive-loop">
+    <path d="M 737 836 A 386 386 0 0 0 666 138" stroke="url(#amber)" stroke-width="50" stroke-linecap="round"/>
+    <path d="M 566 89 Q 558 81 563 97 L 605 219 Q 611 236 620 221 L 646 180 L 704 151 Q 724 142 703 134 Z" fill="url(#amber)"/>
+    <path d="M 535 128 A 386 386 0 1 0 737 836" stroke="url(#navy)" stroke-width="50" stroke-linecap="round"/>
+  </g>
+  <g id="neural-network" stroke="#082951" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 226 458 L 355 346 L 365 533 L 226 458 L 239 625 L 365 533 L 355 718 L 239 625"/>
+    <path d="M 355 346 C 465 355 437 481 518 478 M 365 533 H 487 M 355 718 C 449 701 443 579 518 575"/>
+  </g>
+  <g id="neural-nodes" fill="url(#navy)">
+    <circle cx="226" cy="458" r="46"/><circle cx="355" cy="346" r="48"/><circle cx="365" cy="533" r="47"/><circle cx="239" cy="625" r="46"/><circle cx="355" cy="718" r="48"/>
+  </g>
+  <g id="symbolic-reasoning" stroke="url(#amber)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 589 478 H 615 Q 666 478 666 427 V 411 Q 666 370 708 370 H 731 M 624 533 H 786 M 589 575 H 615 Q 666 575 666 624 V 650 Q 666 675 708 675 H 740"/>
+  </g>
+  <g id="symbolic-nodes" fill="url(#amber)"><rect x="697" y="328" width="82" height="84" rx="14"/><rect x="761" y="490" width="82" height="84" rx="14"/><rect x="710" y="634" width="82" height="84" rx="14"/></g>
+  <path id="discovery-spark" d="M 553 455 C 568 513 572 516 622 531 C 572 546 568 550 553 607 C 538 550 534 546 484 531 C 534 516 538 513 553 455 Z" fill="url(#amber)"/>
+</svg>

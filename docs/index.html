@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>:root{color-scheme:light}html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>RSI-Science</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Neural-symbolic recursive self-improvement for interpretable science discovery. Code is enough, and self-improvement maxes out the code.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RSI-Science">
+<meta property="og:description" content="Neural-symbolic recursive self-improvement for interpretable science discovery. Code is enough, and self-improvement maxes out the code.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<style>
+/* Layout concept: a thesis poster. A quiet page, with one navy slab that carries the two claims.
+   Colour has one meaning everywhere: blue = neural, amber = symbolic (the code). */
+:root{
+  --bg:#F5F7FA; --surface:#FFFFFF; --ink:#0B1B33; --ink-2:#44546B; --ink-3:#5A6A82; --rule:#D9E0EA; --track:#E3E9F1;
+  --neural:#0B3A75; --neural-soft:#E3EBF8; --symbolic-ink:#8F4C00; --symbolic-soft:#FDEBD0;
+  --mark-prog:#D37812; --mark-net:#3267B8;
+  --slab-bg:#071B38; --slab-card:#0E2A52; --slab-ink:#F3F7FD; --slab-ink-2:#B9C8DE; --slab-ink-3:#8DA0BD;
+  --slab-rule:#24426F; --slab-amber:#FFB02E; --slab-blue:#8DB6F5;
+  --s-prog:#D37812; --s-net:#5B92E7; --s-mute:#7088A9;
+  --logo-navy-a:#092C58; --logo-navy-b:#052044; --logo-navy:#082951; --logo-amber-a:#FFA512; --logo-amber-b:#F58A00;
+  --disp:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","Noto Serif CJK SC",serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#07111F; --surface:#0D1B2F; --ink:#E8EEF7; --ink-2:#A9B8CD; --ink-3:#8294AE; --rule:#1D2E47; --track:#16263D;
+    --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008;
+    --mark-prog:#D37812; --mark-net:#5B92E7;
+    --logo-navy-a:#8DB6F5; --logo-navy-b:#5A8AD6; --logo-navy:#7FA8E8;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#07111F; --surface:#0D1B2F; --ink:#E8EEF7; --ink-2:#A9B8CD; --ink-3:#8294AE; --rule:#1D2E47; --track:#16263D;
+  --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008;
+  --mark-prog:#D37812; --mark-net:#5B92E7;
+  --logo-navy-a:#8DB6F5; --logo-navy-b:#5A8AD6; --logo-navy:#7FA8E8;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-text-size-adjust:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--mark-net);outline-offset:3px}
+.wrap{width:100%;max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:root:not([data-lang="zh"]) [lang="zh-CN"]{display:none!important}
+:root[data-lang="zh"] [lang="en"]{display:none!important}
+
+/* top bar */
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.word{font:500 .875rem/1 var(--mono);letter-spacing:.04em}
+.lang{display:inline-flex;gap:2px;padding:2px;border:1px solid var(--rule);border-radius:999px;background:var(--surface)}
+.lang button{font:500 .8125rem/1 var(--body);padding:7px 13px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:center;padding-block:clamp(20px,5vw,64px) clamp(36px,6vw,72px)}
+.hero-art{order:-1}
+.logo{display:block;width:clamp(120px,30vw,150px);height:auto}
+.title{font:500 clamp(2.05rem,4.7vw,3.7rem)/1.07 var(--disp);letter-spacing:-.012em;margin:0;text-wrap:balance;max-width:20ch}
+.nb{white-space:nowrap}
+.t-n{color:var(--neural)} .t-s{color:var(--symbolic-ink)}
+.title-zh{font:500 1.2rem/1.4 var(--disp);color:var(--ink-2);margin:14px 0 0}
+.lede{font-size:1.125rem;line-height:1.55;color:var(--ink-2);max-width:46ch;margin:22px 0 0}
+@media(min-width:820px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,6vw,80px)}
+  .hero-art{order:0}
+  .logo{width:clamp(200px,22vw,280px)}
+}
+
+/* the slab: the two claims */
+.slab{background:var(--slab-bg);color:var(--slab-ink);border-block:1px solid var(--slab-rule)}
+.slab .wrap{padding-block:clamp(40px,7vw,88px)}
+.pillars{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(48px,7vw,64px)}
+@media(min-width:980px){.pillars{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,5vw,80px)}}
+.num{font:italic 400 1.5rem/1 var(--disp);color:var(--slab-ink-3);margin:0 0 14px}
+.claim{font:500 clamp(2rem,3.7vw,3.1rem)/1.06 var(--disp);letter-spacing:-.01em;margin:0 0 18px;text-wrap:balance}
+.claim .a{color:var(--slab-amber)} .claim .b{color:var(--slab-blue)}
+.para{color:var(--slab-ink-2);max-width:56ch;margin:0 0 12px}
+.goal{color:var(--slab-ink);font-weight:500;max-width:56ch;margin:0 0 26px}
+.proof{margin:0;min-width:0;background:var(--slab-card);border:1px solid var(--slab-rule);border-radius:10px;padding:16px 16px 14px}
+.proof .cap{color:var(--slab-ink-2);font-size:.875rem;line-height:1.5;margin:12px 0 0}
+.codewrap{overflow-x:auto}
+.code{margin:0;font:400 .8125rem/1.7 var(--mono);color:var(--slab-ink);white-space:pre}
+.code .cm{color:var(--slab-ink-3)} .code .am{color:var(--slab-amber);font-weight:500}
+
+.chartbox{position:relative}
+.chart{display:block;width:100%;max-width:560px;height:auto;touch-action:pan-y}
+.chart .grid{stroke:var(--slab-rule);stroke-width:1}
+.chart text{font:400 13px var(--body);fill:var(--slab-ink-3)}
+.chart text.lab{fill:var(--slab-ink)}
+.chart .best{fill:none;stroke:var(--s-prog);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .ref{stroke:var(--s-net);stroke-width:1.5;stroke-dasharray:5 4}
+.chart .pt{stroke:var(--slab-card);stroke-width:2}
+.chart .pt.kept{fill:var(--s-prog)} .chart .pt.not{fill:var(--s-mute)}
+.chart .cross{stroke:var(--slab-ink-3);stroke-width:1}
+.chart .hl{fill:none;stroke:var(--slab-ink);stroke-width:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;margin:10px 0 0;padding:0;font-size:.8125rem;color:var(--slab-ink-2)}
+.legend li{display:inline-flex;align-items:center;gap:8px}
+.k-line{width:18px;border-top:2px solid var(--s-prog)}
+.k-dash{width:18px;border-top:2px dashed var(--s-net)}
+.k-dot{width:10px;height:10px;border-radius:50%}
+.k-dot.kept{background:var(--s-prog)} .k-dot.not{background:var(--s-mute)}
+.tip{position:absolute;z-index:3;max-width:260px;pointer-events:none;background:var(--slab-bg);border:1px solid var(--slab-rule);border-radius:8px;padding:9px 11px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.tip .tv{font:600 1.25rem/1.1 var(--body);color:var(--slab-ink);font-variant-numeric:tabular-nums}
+.tip .ts{font-size:.8125rem;color:var(--slab-ink-2);margin-top:3px}
+.tip .td{font-size:.8125rem;color:var(--slab-ink-2);margin-top:6px;line-height:1.4}
+.tbl{margin-top:12px;font-size:.8125rem;color:var(--slab-ink-2)}
+.tbl summary{cursor:pointer;color:var(--slab-ink);padding:4px 0}
+.tbl-scroll{overflow:auto;max-height:340px;margin-top:8px}
+.tbl table{border-collapse:collapse;width:100%;min-width:520px}
+.tbl th,.tbl td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--slab-rule);vertical-align:top}
+.tbl th{color:var(--slab-ink);font-weight:500}
+.tbl td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* sections on the page ground */
+.loop .wrap,.standing .wrap,.map .wrap{padding-block:clamp(44px,7vw,84px)}
+.standing .wrap,.map .wrap{border-top:1px solid var(--rule)}
+h2{font:500 clamp(1.5rem,2.6vw,2rem)/1.15 var(--disp);letter-spacing:-.005em;margin:0 0 6px}
+.sub{color:var(--ink-2);margin:0 0 28px;max-width:62ch}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr)}
+.step{min-width:0;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px}
+.chip{display:inline-block;font:500 .6875rem/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;padding:5px 7px;border-radius:4px;margin-bottom:10px}
+.chip.n{background:var(--neural-soft);color:var(--neural)}
+.chip.s{background:var(--symbolic-soft);color:var(--symbolic-ink)}
+.chip.d{background:var(--track);color:var(--ink-2)}
+.step h3{font:600 1.0625rem/1.3 var(--body);margin:0 0 6px}
+.step p{margin:0;color:var(--ink-2);font-size:.9375rem;line-height:1.5}
+.inner{margin-top:12px;border:1px dashed var(--ink-3);border-radius:8px;padding:9px 11px;font-size:.875rem;line-height:1.45;color:var(--ink-2)}
+.arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;color:var(--ink-3)}
+.alabel{font:400 .75rem/1 var(--mono);letter-spacing:.04em;margin-bottom:6px}
+.aline{position:relative;display:block;width:2px;height:26px;background:currentColor}
+.aline::after{content:"";position:absolute;left:-4px;bottom:-1px;border-top:8px solid currentColor;border-left:5px solid transparent;border-right:5px solid transparent}
+@media(min-width:900px){
+  .steps{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr)}
+  .arrow{padding:0 10px;min-width:92px}
+  .aline{width:100%;height:2px}
+  .aline::after{left:auto;right:-1px;bottom:auto;top:-4px;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid currentColor;border-right:0}
+}
+.return{margin-top:14px;display:flex;gap:12px;align-items:flex-start;border:1px solid var(--rule);border-radius:10px;padding:12px 14px;background:var(--surface);color:var(--ink-2);font-size:.9375rem}
+.return .glyph{font:500 1.25rem/1 var(--mono);color:var(--ink-3)}
+.recur{margin:14px 0 0;color:var(--ink-2);font-size:.9375rem}
+.recur code{font:500 .875rem var(--mono);background:var(--track);color:var(--ink);padding:2px 6px;border-radius:4px}
+
+.board{border-top:1px solid var(--rule)}
+.hrow,.brow{display:grid;grid-template-columns:minmax(150px,1.3fr) repeat(3,minmax(0,1fr)) minmax(190px,1.3fr);gap:0 18px;align-items:center;border-bottom:1px solid var(--rule)}
+.hrow{padding:10px 0;font:500 .75rem/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.brow{padding:16px 0}
+.task b{display:block;font-weight:600}
+.task span{color:var(--ink-3);font-size:.8125rem}
+.val>b{display:block;font:500 1.5rem/1.1 var(--body);font-variant-numeric:tabular-nums}
+.val>span{display:block;color:var(--ink-3);font-size:.8125rem;line-height:1.3;margin-top:2px;overflow-wrap:anywhere}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:var(--ink-3)}
+.dot.o{background:var(--mark-prog)} .dot.n{background:var(--mark-net)}
+.val .k{display:none}
+.meter{position:relative;height:10px;background:var(--track);border-radius:4px;overflow:hidden}
+.fill{position:absolute;left:0;top:0;bottom:0;background:var(--mark-prog);border-radius:0 4px 4px 0}
+.pct{display:block;margin-top:6px;font-size:.875rem;color:var(--ink-2)}
+.fine{color:var(--ink-3);font-size:.875rem;line-height:1.55;max-width:80ch;margin:18px 0 0}
+@media(max-width:759px){
+  .hrow{display:none}
+  .brow{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .brow .task,.brow .gap{grid-column:1/-1}
+  .val .k{display:block;margin:0 0 3px;font:500 .6875rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+  .val>b{font-size:1.25rem}
+}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+@media(min-width:760px){.cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}}
+.col h3{font:500 .75rem/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.col ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.col li b{font-weight:600}
+.col li span{display:block;color:var(--ink-2);font-size:.9375rem;line-height:1.45}
+
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:28px 44px;border-top:1px solid var(--rule);color:var(--ink-3);font-size:.875rem}
+footer a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <span class="word">RSI-Science</span>
+    <div class="lang" role="group" aria-label="Language / 语言">
+      <button id="b-en" type="button" aria-pressed="true">EN</button>
+      <button id="b-zh" type="button" aria-pressed="false">中文</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <h1 class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive Self-Improvement for Interpretable Science Discovery</h1>
+      <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
+      <p class="lede" lang="en">The LLM is the neural part and writes code. The code is the symbolic part and is the scientific model.</p>
+      <p class="lede" lang="zh-CN">LLM 是 neural 部分，负责写代码；代码是 symbolic 部分，就是最终的科学模型。</p>
+    </div>
+    <div class="hero-art">
+      <svg class="logo" viewBox="0 0 1024 1024" fill="none" role="img" aria-label="RSI-Science logo">
+        <defs><linearGradient id="lg-navy" x1="180" y1="200" x2="790" y2="900" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-navy-a)"/><stop offset="1" style="stop-color:var(--logo-navy-b)"/></linearGradient><linearGradient id="lg-amber" x1="610" y1="100" x2="890" y2="800" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-amber-a)"/><stop offset="1" style="stop-color:var(--logo-amber-b)"/></linearGradient></defs>
+        <g id="recursive-loop">
+          <path d="M 737 836 A 386 386 0 0 0 666 138" stroke="url(#lg-amber)" stroke-width="50" stroke-linecap="round"/>
+          <path d="M 566 89 Q 558 81 563 97 L 605 219 Q 611 236 620 221 L 646 180 L 704 151 Q 724 142 703 134 Z" fill="url(#lg-amber)"/>
+          <path d="M 535 128 A 386 386 0 1 0 737 836" stroke="url(#lg-navy)" stroke-width="50" stroke-linecap="round"/>
+        </g>
+        <g id="neural-network" style="stroke:var(--logo-navy)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 226 458 L 355 346 L 365 533 L 226 458 L 239 625 L 365 533 L 355 718 L 239 625"/>
+          <path d="M 355 346 C 465 355 437 481 518 478 M 365 533 H 487 M 355 718 C 449 701 443 579 518 575"/>
+        </g>
+        <g id="neural-nodes" fill="url(#lg-navy)">
+          <circle cx="226" cy="458" r="46"/><circle cx="355" cy="346" r="48"/><circle cx="365" cy="533" r="47"/><circle cx="239" cy="625" r="46"/><circle cx="355" cy="718" r="48"/>
+        </g>
+        <g id="symbolic-reasoning" stroke="url(#lg-amber)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 589 478 H 615 Q 666 478 666 427 V 411 Q 666 370 708 370 H 731 M 624 533 H 786 M 589 575 H 615 Q 666 575 666 624 V 650 Q 666 675 708 675 H 740"/>
+        </g>
+        <g id="symbolic-nodes" fill="url(#lg-amber)"><rect x="697" y="328" width="82" height="84" rx="14"/><rect x="761" y="490" width="82" height="84" rx="14"/><rect x="710" y="634" width="82" height="84" rx="14"/></g>
+        <path id="discovery-spark" d="M 553 455 C 568 513 572 516 622 531 C 572 546 568 550 553 607 C 538 550 534 546 484 531 C 534 516 538 513 553 455 Z" fill="url(#lg-amber)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slab" aria-labelledby="thesis-h">
+  <div class="wrap">
+    <h2 id="thesis-h" class="vh"><span lang="en">Two ideas</span><span lang="zh-CN">两个想法</span></h2>
+    <div class="pillars">
+
+      <article class="pillar">
+        <p class="num">i</p>
+        <h3 class="claim" lang="en"><span class="a">Code</span> is enough.</h3>
+        <h3 class="claim" lang="zh-CN"><span class="a">代码</span>就够了。</h3>
+        <p class="para" lang="en">A scientific model can be a program: rules, equations and algorithms in numpy and scipy, with no neural network inside. Code is symbolic. You can read it, check it, test it and edit it, and its describe() states every term and what it means.</p>
+        <p class="para" lang="zh-CN">科学模型可以就是一个程序：规则、方程、算法，只用 numpy 和 scipy，里面没有神经网络。代码是符号化的，可以读、可以查、可以测试、可以改，describe() 会写明每一项及其含义。</p>
+        <p class="goal" lang="en">The goal is to match SOTA networks such as AlphaFold, ESM and MatterGen on their own benchmarks, on the same held-out cases.</p>
+        <p class="goal" lang="zh-CN">目标是在 AlphaFold、ESM、MatterGen 这类 SOTA 网络自己的 benchmark 上，在同样的留出 case 上与它们持平。</p>
+        <figure class="proof">
+          <div class="codewrap"><pre class="code"><code><span class="cm"># describe() of the best program of a real run (excerpt)</span>
+score(i, a-&gt;b) = x(i) . w_site + x(i) . W[:, b]
+<span class="cm"># fitted by ridge regression on centred within-assay ranks of fitness</span>
+x(i) features (w_site shape (79,), W shape (79, 20)):
+  wt=I: site -0.021; per replacement ... L<span class="am">+0.19</span> M+0.10 ... V<span class="am">+0.21</span> ...
+  wt=K: site +0.005; per replacement ... Q+0.06 R<span class="am">+0.19</span> ...
+  wt=D: site +0.001; per replacement ... E<span class="am">+0.13</span> ... N+0.09 ...
+  wt=F: site -0.039; per replacement ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
+          <p class="cap" lang="en">It learned that isoleucine tolerates leucine and valine, lysine tolerates arginine, aspartate tolerates glutamate and phenylalanine tolerates tyrosine. A higher weight means more tolerated.</p>
+          <p class="cap" lang="zh-CN">它学到：异亮氨酸能容忍亮氨酸和缬氨酸，赖氨酸能容忍精氨酸，天冬氨酸能容忍谷氨酸，苯丙氨酸能容忍酪氨酸。权重越高，越能容忍。</p>
+        </figure>
+      </article>
+
+      <article class="pillar">
+        <p class="num">ii</p>
+        <h3 class="claim" lang="en"><span class="b">Self-improvement</span> maxes out the code.</h3>
+        <h3 class="claim" lang="zh-CN"><span class="b">自我改进</span>把代码榨到极致。</h3>
+        <p class="para" lang="en">The LLM writes the program. A loop scores every version on held-out data, keeps what holds up and feeds the evidence back. An inner search tunes the knobs at machine speed. The LLM makes the changes a search cannot: new terms and new forms. A new run starts from the best program of the last.</p>
+        <p class="para" lang="zh-CN">LLM 写出程序。循环在留出数据上给每个版本打分，留下站得住的，再把证据交回去。内层搜索按机器速度调旋钮；LLM 做搜索做不到的改动：新的项、新的形式。新的 run 从上一个 run 的最好程序接着做。</p>
+        <p class="goal" lang="en">The aim is code-maxing: the best performance a program can reach.</p>
+        <p class="goal" lang="zh-CN">目标是 code-maxing：让程序能达到的性能最大化。</p>
+        <figure class="proof">
+          <div class="chartbox" id="chartbox">
+            <svg id="chart" class="chart" viewBox="0 0 380 290" data-vbw="380" data-x0="44" data-dx="12.96" role="img" tabindex="0" aria-label="">
+              <line class="grid" x1="44.0" x2="368.0" y1="244.0" y2="244.0"/>
+              <text x="38.0" y="248.5" text-anchor="end">0.30</text>
+              <line class="grid" x1="44.0" x2="368.0" y1="188.5" y2="188.5"/>
+              <text x="38.0" y="193.0" text-anchor="end">0.33</text>
+              <line class="grid" x1="44.0" x2="368.0" y1="133.0" y2="133.0"/>
+              <text x="38.0" y="137.5" text-anchor="end">0.36</text>
+              <line class="grid" x1="44.0" x2="368.0" y1="77.5" y2="77.5"/>
+              <text x="38.0" y="82.0" text-anchor="end">0.39</text>
+              <line class="grid" x1="44.0" x2="368.0" y1="22.0" y2="22.0"/>
+              <text x="38.0" y="26.5" text-anchor="end">0.42</text>
+              <text x="44.0" y="262.0" text-anchor="middle">0</text>
+              <text x="108.8" y="262.0" text-anchor="middle">5</text>
+              <text x="173.6" y="262.0" text-anchor="middle">10</text>
+              <text x="238.4" y="262.0" text-anchor="middle">15</text>
+              <text x="303.2" y="262.0" text-anchor="middle">20</text>
+              <text x="368.0" y="262.0" text-anchor="middle">25</text>
+              <text lang="en" x="206.0" y="282.0" text-anchor="middle">evaluation</text><text lang="zh-CN" x="206.0" y="282.0" text-anchor="middle">评测次数</text>
+              <text lang="en" x="44.0" y="12.0" text-anchor="start">Spearman, val</text><text lang="zh-CN" x="44.0" y="12.0" text-anchor="start">Spearman，val</text>
+              <line class="ref" x1="44.0" x2="368.0" y1="36.8" y2="36.8"/>
+              <text x="368.0" y="51.8" text-anchor="end" class="lab">ESM-2 650M 0.412</text>
+              <path class="best" d="M44.00,228.46 H56.96 V166.11 H82.88 V142.80 H160.64 V138.92 H186.56 V120.60 H225.44 V118.02 H264.32 V114.68 H368.00"/>
+              <circle class="pt not" data-i="2" cx="69.92" cy="181.29" r="5"/>
+              <circle class="pt not" data-i="4" cx="95.84" cy="150.39" r="5"/>
+              <circle class="pt not" data-i="5" cx="108.80" cy="157.98" r="5"/>
+              <circle class="pt not" data-i="6" cx="121.76" cy="148.35" r="5"/>
+              <circle class="pt not" data-i="7" cx="134.72" cy="143.36" r="5"/>
+              <circle class="pt not" data-i="8" cx="147.68" cy="145.95" r="5"/>
+              <circle class="pt not" data-i="10" cx="173.60" cy="148.91" r="5"/>
+              <circle class="pt not" data-i="12" cx="199.52" cy="122.82" r="5"/>
+              <circle class="pt not" data-i="13" cx="212.48" cy="124.67" r="5"/>
+              <circle class="pt not" data-i="15" cx="238.40" cy="124.30" r="5"/>
+              <circle class="pt not" data-i="16" cx="251.36" cy="128.93" r="5"/>
+              <circle class="pt not" data-i="18" cx="277.28" cy="115.61" r="5"/>
+              <circle class="pt not" data-i="19" cx="290.24" cy="118.57" r="5"/>
+              <circle class="pt not" data-i="20" cx="303.20" cy="114.87" r="5"/>
+              <circle class="pt not" data-i="21" cx="316.16" cy="114.87" r="5"/>
+              <circle class="pt not" data-i="22" cx="329.12" cy="118.20" r="5"/>
+              <circle class="pt not" data-i="23" cx="342.08" cy="120.05" r="5"/>
+              <circle class="pt not" data-i="24" cx="355.04" cy="122.64" r="5"/>
+              <circle class="pt not" data-i="25" cx="368.00" cy="122.08" r="5"/>
+              <circle class="pt kept" data-i="0" cx="44.00" cy="228.46" r="6"/>
+              <circle class="pt kept" data-i="1" cx="56.96" cy="166.11" r="6"/>
+              <circle class="pt kept" data-i="3" cx="82.88" cy="142.80" r="6"/>
+              <circle class="pt kept" data-i="9" cx="160.64" cy="138.92" r="6"/>
+              <circle class="pt kept" data-i="11" cx="186.56" cy="120.60" r="6"/>
+              <circle class="pt kept" data-i="14" cx="225.44" cy="118.02" r="6"/>
+              <circle class="pt kept" data-i="17" cx="264.32" cy="114.68" r="6"/>
+              <text lang="en" x="62.0" y="238.0" text-anchor="start" class="lab">start 0.308</text><text lang="zh-CN" x="62.0" y="238.0" text-anchor="start" class="lab">起点 0.308</text>
+              <text lang="en" x="368.0" y="96.0" text-anchor="end" class="lab">best 0.370</text><text lang="zh-CN" x="368.0" y="96.0" text-anchor="end" class="lab">最好 0.370</text>
+              <line class="cross" x1="0" x2="0" y1="22.0" y2="244.0" hidden/>
+              <circle class="hl" cx="0" cy="0" r="9" hidden/>
+            </svg>
+            <div class="tip" id="tip" hidden>
+              <div class="tv"></div><div class="ts"></div><div class="td"></div>
+            </div>
+          </div>
+          <p class="vh" id="live" aria-live="polite"></p>
+          <ul class="legend">
+            <li><span class="k-line"></span><span lang="en">best version so far</span><span lang="zh-CN">迄今最好的版本</span></li>
+            <li><span class="k-dot kept"></span><span lang="en">kept</span><span lang="zh-CN">保留</span></li>
+            <li><span class="k-dot not"></span><span lang="en">not kept</span><span lang="zh-CN">未保留</span></li>
+            <li><span class="k-dash"></span><span>ESM-2 650M</span></li>
+          </ul>
+          <p class="cap" lang="en">One real run on the ESM-2 mutation-effect task: Claude Opus 5.5, 25 evaluations in 2.8 hours. Each dot is a version the LLM wrote; point at it to see what it changed (the log is the LLM's own). On the test split the start scored 0.322 and the best version 0.380, against 0.445 for ESM-2.</p>
+          <p class="cap" lang="zh-CN">ESM-2 突变效应任务上的一次真实 run：Claude Opus 5.5，2.8 小时内 25 次评测。每个点是 LLM 写出的一个版本，指向它可以看到改了什么（记录是 LLM 自己写的英文）。在 test 上，起点是 0.322，最好的版本是 0.380，ESM-2 是 0.445。</p>
+          <details class="tbl">
+            <summary><span lang="en">Data table</span><span lang="zh-CN">数据表</span></summary>
+            <div class="tbl-scroll">
+              <table>
+                <thead><tr>
+                  <th><span lang="en">Eval</span><span lang="zh-CN">评测</span></th>
+                  <th><span lang="en">Spearman (val)</span><span lang="zh-CN">Spearman（val）</span></th>
+                  <th><span lang="en">Verdict</span><span lang="zh-CN">判定</span></th>
+                  <th><span lang="en">What the LLM changed</span><span lang="zh-CN">LLM 的改动</span></th>
+                </tr></thead>
+                <tbody>
+                  <tr><td class="n">0</td><td class="n">0.308</td><td><span lang="en">start</span><span lang="zh-CN">起点</span></td><td></td></tr>
+                  <tr><td class="n">1</td><td class="n">0.342</td><td><span lang="en">kept</span><span lang="zh-CN">保留</span></td><td>ridge on sequence-window features x 20 replacement weights (wt, composition, burial, moment, termini, entropy) [tuned]</td></tr>
+                  <tr><td class="n">2</td><td class="n">0.334</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>neighbour one-hot +-4 (site only), stage-2 gating of replacement costs by predicted site sensitivity, target/weight knobs [tuned]</td></tr>
+                  <tr><td class="n">3</td><td class="n">0.355</td><td><span lang="en">kept</span><span lang="zh-CN">保留</span></td><td>small-domain (L&lt;~70) copies of the replacement-specific terms (length split), lam_site 0.03</td></tr>
+                  <tr><td class="n">4</td><td class="n">0.351</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>simplify: drop moment, composition windows, entropy, wt x burial, wt x length, target/weight variants</td></tr>
+                  <tr><td class="n">5</td><td class="n">0.346</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>per-assay intercepts, windowed Chou-Fasman SS propensities in replacement part, centrality [tuned]</td></tr>
+                  <tr><td class="n">6</td><td class="n">0.352</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>ablation: no centrality term</td></tr>
+                  <tr><td class="n">7</td><td class="n">0.354</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>ablation: no centrality, no SS propensities</td></tr>
+                  <tr><td class="n">8</td><td class="n">0.353</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>ablation: no centrality, no SS, no per-assay intercept</td></tr>
+                  <tr><td class="n">9</td><td class="n">0.357</td><td><span lang="en">kept</span><span lang="zh-CN">保留</span></td><td>windowed TOP-IDP disorder propensity (+-30, +-5) in site and replacement parts</td></tr>
+                  <tr><td class="n">10</td><td class="n">0.351</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>simplify: drop Kyte-Doolittle burial; short (+-2) disorder window takes its place</td></tr>
+                  <tr><td class="n">11</td><td class="n">0.367</td><td><span lang="en">kept</span><span lang="zh-CN">保留</span></td><td>ablation: best (#9) without neighbour one-hot block</td></tr>
+                  <tr><td class="n">12</td><td class="n">0.365</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>neighbours as fixed scales: KD and TOP-IDP of residues at distance 1-4 (8 features instead of 80 one-hot)</td></tr>
+                  <tr><td class="n">13</td><td class="n">0.364</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>ablation: #11 without the stage-2 gate</td></tr>
+                  <tr><td class="n">14</td><td class="n">0.368</td><td><span lang="en">kept</span><span lang="zh-CN">保留</span></td><td>#11 + windowed Chou-Fasman helix/strand/turn propensities (+-3) in site and replacement parts</td></tr>
+                  <tr><td class="n">15</td><td class="n">0.365</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>#14 + fixed-scale neighbours (KD, TOP-IDP at distance 1-4)</td></tr>
+                  <tr><td class="n">16</td><td class="n">0.362</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>#14 + same-face hydropathy (helix 100 deg / strand 180 deg cosine-weighted KD of residues at distance 1-4, fixed weights)</td></tr>
+                  <tr><td class="n">17</td><td class="n">0.370</td><td><span lang="en">kept</span><span lang="zh-CN">保留</span></td><td>#14 (no neighbour terms; KD burial, TOP-IDP and CF windows, small-domain copies, gate) with inner search [tuned]</td></tr>
+                  <tr><td class="n">18</td><td class="n">0.369</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>reduced replacement terms: context features act on replacement b through fixed properties (KD, volume, charge, helix propensity, P, G)</td></tr>
+                  <tr><td class="n">19</td><td class="n">0.368</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>ablation: #17 without the gate&#x27;s wild-type x sensitivity table (gate s only)</td></tr>
+                  <tr><td class="n">20</td><td class="n">0.370</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>steeper small-domain gate: 1/(1+(L/80)^12)</td></tr>
+                  <tr><td class="n">21</td><td class="n">0.370</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>steeper small-domain gate + inner search over all knobs</td></tr>
+                  <tr><td class="n">22</td><td class="n">0.368</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>context features (burial, disorder, SS, termini) act on the site part only; replacement-specific terms = wild-type tables (+small-domain copy) and gate</td></tr>
+                  <tr><td class="n">23</td><td class="n">0.367</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>special-residue rules: Cys x protein Cys count/parity (site), wild-type Gly/Pro x helix window</td></tr>
+                  <tr><td class="n">24</td><td class="n">0.366</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>small domains (L&lt;80) get a separate model fitted only on them; larger proteins a model fitted only on larger proteins</td></tr>
+                  <tr><td class="n">25</td><td class="n">0.366</td><td><span lang="en">not kept</span><span lang="zh-CN">未保留</span></td><td>third disorder window (+-2) alongside +-30 and +-4</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </figure>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="loop">
+  <div class="wrap">
+    <h2 lang="en">The loop</h2><h2 lang="zh-CN">循环</h2>
+    <p class="sub" lang="en">Every accepted version is the base of the next.</p>
+    <p class="sub" lang="zh-CN">每个被接受的版本都是下一版的起点。</p>
+    <figure style="margin:0">
+      <ol class="steps">
+        <li class="step">
+          <span class="chip n">neural</span>
+          <h3>LLM</h3>
+          <p lang="en">Reads the program, the notes and the evidence. Writes the next version.</p>
+          <p lang="zh-CN">读程序、笔记和证据，写出下一个版本。</p>
+        </li>
+        <li class="arrow" aria-hidden="true"><span class="alabel" lang="en">writes</span><span class="alabel" lang="zh-CN">写出</span><span class="aline"></span></li>
+        <li class="step">
+          <span class="chip s">symbolic</span>
+          <h3 lang="en">Program</h3><h3 lang="zh-CN">程序</h3>
+          <p lang="en">Rules, equations and algorithms. This is the scientific model.</p>
+          <p lang="zh-CN">规则、方程、算法。这就是科学模型。</p>
+          <div class="inner" lang="en">Inner search: tunes its knobs at machine speed before evaluations.</div>
+          <div class="inner" lang="zh-CN">内层搜索：在评测之前按机器速度调它的旋钮。</div>
+        </li>
+        <li class="arrow" aria-hidden="true"><span class="alabel" lang="en">scored on</span><span class="alabel" lang="zh-CN">打分于</span><span class="aline"></span></li>
+        <li class="step">
+          <span class="chip d" lang="en">data</span><span class="chip d" lang="zh-CN">数据</span>
+          <h3 lang="en">Held-out cases</h3><h3 lang="zh-CN">留出的 case</h3>
+          <p lang="en">Cases it was not fitted on, the same cases the neural network is scored on.</p>
+          <p lang="zh-CN">没拟合过的 case，和神经网络用的是同一批。</p>
+        </li>
+        <li class="arrow" aria-hidden="true"><span class="alabel" lang="en">decides</span><span class="alabel" lang="zh-CN">判定</span><span class="aline"></span></li>
+        <li class="step">
+          <span class="chip d" lang="en">verdict</span><span class="chip d" lang="zh-CN">判定</span>
+          <h3 lang="en">Keep what holds up</h3><h3 lang="zh-CN">留下站得住的</h3>
+          <p lang="en">Kept if better, or smaller within noise. A second split checks it silently.</p>
+          <p lang="zh-CN">更好才保留，或在噪声内更小也保留。另一个划分静默复核。</p>
+        </li>
+      </ol>
+      <figcaption>
+        <div class="return"><span class="glyph" aria-hidden="true">&#8634;</span>
+          <span lang="en">Score, per-case regressions and diagnostics go back to the LLM, which writes the next version.</span>
+          <span lang="zh-CN">分数、逐 case 回归和诊断回到 LLM，由它写出下一个版本。</span></div>
+        <p class="recur" lang="en"><code>--init-from</code> starts a new run from the best program of an earlier run.</p>
+        <p class="recur" lang="zh-CN"><code>--init-from</code> 让新的 run 从更早 run 的最好程序开始。</p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="standing">
+  <div class="wrap">
+    <h2 lang="en">Where it stands</h2><h2 lang="zh-CN">目前的进展</h2>
+    <p class="sub" lang="en">The best program of each task on the test split, between a classical baseline and the neural network.</p>
+    <p class="sub" lang="zh-CN">每个任务里最好的程序在 test 上的表现，位于经典基线和神经网络之间。</p>
+    <div class="board" role="table" aria-label="Best program per task against a classical baseline and the neural network">
+      <div class="hrow" role="row">
+        <div role="columnheader"><span lang="en">Task</span><span lang="zh-CN">任务</span></div>
+        <div role="columnheader"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></div>
+        <div role="columnheader"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></div>
+        <div role="columnheader"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></div>
+        <div role="columnheader"><span lang="en">Gap closed</span><span lang="zh-CN">缩小的差距</span></div>
+      </div>
+
+      <div class="brow" role="row">
+        <div class="task" role="cell"><b lang="en">Tabular classification</b><b lang="zh-CN">表格数据分类</b><span>ROC AUC</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.872</b><span lang="en">logistic regression</span><span lang="zh-CN">逻辑回归</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.924</b></div>
+        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.931</b><span>TabPFN v2</span></div>
+        <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes about 90% of the gap" title="(ours - baseline) / (network - baseline), from unrounded scores"><span class="fill" style="width:90%"></span></div><span class="pct" lang="en">about 90%</span><span class="pct" lang="zh-CN">约 90%</span></div>
+      </div>
+
+      <div class="brow" role="row">
+        <div class="task" role="cell"><b lang="en">Mutation effects</b><b lang="zh-CN">突变效应</b><span>Spearman</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.322</b><span lang="en">starting program</span><span lang="zh-CN">起始程序</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.386</b></div>
+        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.445</b><span>ESM-2 650M</span></div>
+        <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 52% of the gap" title="(0.386 - 0.322) / (0.445 - 0.322)"><span class="fill" style="width:52%"></span></div><span class="pct">52%</span></div>
+      </div>
+
+      <div class="brow" role="row">
+        <div class="task" role="cell"><b lang="en">River flow</b><b lang="zh-CN">河流径流</b><span>median NSE</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.315</b><span>GloFAS</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.444</b></div>
+        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.583</b><span>Google LSTM</span></div>
+        <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 48% of the gap" title="(0.444 - 0.315) / (0.583 - 0.315)"><span class="fill" style="width:48%"></span></div><span class="pct">48%</span></div>
+      </div>
+
+      <div class="brow" role="row">
+        <div class="task" role="cell"><b lang="en">Crystal stability</b><b lang="zh-CN">晶体稳定性</b><span>F1</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.331</b><span lang="en">Voronoi random forest</span><span lang="zh-CN">Voronoi 随机森林</span></div>
+        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.381</b></div>
+        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.862</b><span>EquiformerV3</span></div>
+        <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 9% of the gap" title="(0.381 - 0.331) / (0.862 - 0.331)"><span class="fill" style="width:9%"></span></div><span class="pct">9%</span></div>
+      </div>
+    </div>
+    <p class="fine" lang="en">Gap closed = (ours - baseline) / (network - baseline). First runs on 2026-10-30 and 10-31, one run per cell. The tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric, which was then made strict. ProteinGym and Runs N' Poses have not been run by an agent yet.</p>
+    <p class="fine" lang="zh-CN">缩小的差距 = (我们 - 基线) / (网络 - 基线)。首批 run（2026-10-30 和 10-31），每个格子只有一个 run。表格数据的比例用未取整的分数计算。晶体生成没有列入：它的首批 run 钻了指标的空子，指标随后被改严。ProteinGym 和 Runs N' Poses 还没有 agent 跑过。</p>
+  </div>
+</section>
+
+<section class="map">
+  <div class="wrap">
+    <h2 lang="en">Three directions, seven tasks</h2><h2 lang="zh-CN">三个方向，七个任务</h2>
+    <p class="sub" lang="en">Each task pairs a neural SOTA model with the benchmark it was published on.</p>
+    <p class="sub" lang="zh-CN">每个任务都对应一个神经网络 SOTA 模型和它发表时用的 benchmark。</p>
+    <div class="cols">
+      <div class="col">
+        <h3 lang="en">Materials</h3><h3 lang="zh-CN">材料</h3>
+        <ul>
+          <li><b>MatterGen</b><span lang="en">generate stable, unique and new crystals</span><span lang="zh-CN">生成稳定、唯一、新颖的晶体</span></li>
+          <li><b>Matbench Discovery</b><span lang="en">which new crystals are stable</span><span lang="zh-CN">哪些新晶体是稳定的</span></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 lang="en">Bio</h3><h3 lang="zh-CN">生物</h3>
+        <ul>
+          <li><b>ESM-2</b><span lang="en">the effect of single-residue mutations</span><span lang="zh-CN">单点突变的效应</span></li>
+          <li><b>ProteinGym</b><span lang="en">the same assays against 97 models (in preparation)</span><span lang="zh-CN">同样的 assay，对标 97 个模型（筹备中）</span></li>
+          <li><b>Runs N' Poses</b><span lang="en">ligand poses against AlphaFold 3 (in preparation)</span><span lang="zh-CN">配体构象，对标 AlphaFold 3（筹备中）</span></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 lang="en">Generalizability</h3><h3 lang="zh-CN">泛化</h3>
+        <ul>
+          <li><b>TabPFN</b><span lang="en">tabular classification</span><span lang="zh-CN">表格数据分类</span></li>
+          <li><b>Google flood model</b><span lang="en">river flow in ungauged basins</span><span lang="zh-CN">未设站流域的河流径流</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>RSI-Science</span>
+    <span lang="en">First runs: 2026-10-30 and 10-31.</span>
+    <span lang="zh-CN">首批 run：2026-10-30 和 10-31。</span>
+  </div>
+</footer>
+
+<script type="application/json" id="trials">[{"t":0,"v":0.3084,"k":"start","d":"starting program"},{"t":1,"v":0.3421,"k":"kept","d":"ridge on sequence-window features x 20 replacement weights (wt, composition, burial, moment, termini, entropy) [tuned]"},{"t":2,"v":0.3339,"k":"not","d":"neighbour one-hot +-4 (site only), stage-2 gating of replacement costs by predicted site sensitivity, target/weight knobs [tuned]"},{"t":3,"v":0.3547,"k":"kept","d":"small-domain (L<~70) copies of the replacement-specific terms (length split), lam_site 0.03"},{"t":4,"v":0.3506,"k":"not","d":"simplify: drop moment, composition windows, entropy, wt x burial, wt x length, target/weight variants"},{"t":5,"v":0.3465,"k":"not","d":"per-assay intercepts, windowed Chou-Fasman SS propensities in replacement part, centrality [tuned]"},{"t":6,"v":0.3517,"k":"not","d":"ablation: no centrality term"},{"t":7,"v":0.3544,"k":"not","d":"ablation: no centrality, no SS propensities"},{"t":8,"v":0.353,"k":"not","d":"ablation: no centrality, no SS, no per-assay intercept"},{"t":9,"v":0.3568,"k":"kept","d":"windowed TOP-IDP disorder propensity (+-30, +-5) in site and replacement parts"},{"t":10,"v":0.3514,"k":"not","d":"simplify: drop Kyte-Doolittle burial; short (+-2) disorder window takes its place"},{"t":11,"v":0.3667,"k":"kept","d":"ablation: best (#9) without neighbour one-hot block"},{"t":12,"v":0.3655,"k":"not","d":"neighbours as fixed scales: KD and TOP-IDP of residues at distance 1-4 (8 features instead of 80 one-hot)"},{"t":13,"v":0.3645,"k":"not","d":"ablation: #11 without the stage-2 gate"},{"t":14,"v":0.3681,"k":"kept","d":"#11 + windowed Chou-Fasman helix/strand/turn propensities (+-3) in site and replacement parts"},{"t":15,"v":0.3647,"k":"not","d":"#14 + fixed-scale neighbours (KD, TOP-IDP at distance 1-4)"},{"t":16,"v":0.3622,"k":"not","d":"#14 + same-face hydropathy (helix 100 deg / strand 180 deg cosine-weighted KD of residues at distance 1-4, fixed weights)"},{"t":17,"v":0.3699,"k":"kept","d":"#14 (no neighbour terms; KD burial, TOP-IDP and CF windows, small-domain copies, gate) with inner search [tuned]"},{"t":18,"v":0.3694,"k":"not","d":"reduced replacement terms: context features act on replacement b through fixed properties (KD, volume, charge, helix propensity, P, G)"},{"t":19,"v":0.3678,"k":"not","d":"ablation: #17 without the gate's wild-type x sensitivity table (gate s only)"},{"t":20,"v":0.3698,"k":"not","d":"steeper small-domain gate: 1/(1+(L/80)^12)"},{"t":21,"v":0.3698,"k":"not","d":"steeper small-domain gate + inner search over all knobs"},{"t":22,"v":0.368,"k":"not","d":"context features (burial, disorder, SS, termini) act on the site part only; replacement-specific terms = wild-type tables (+small-domain copy) and gate"},{"t":23,"v":0.367,"k":"not","d":"special-residue rules: Cys x protein Cys count/parity (site), wild-type Gly/Pro x helix window"},{"t":24,"v":0.3656,"k":"not","d":"small domains (L<80) get a separate model fitted only on them; larger proteins a model fitted only on larger proteins"},{"t":25,"v":0.3659,"k":"not","d":"third disorder window (+-2) alongside +-30 and +-4"}]</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btnEn = document.getElementById("b-en"), btnZh = document.getElementById("b-zh");
+  var svg = document.getElementById("chart"), box = document.getElementById("chartbox");
+  var tip = document.getElementById("tip"), live = document.getElementById("live");
+  var cross = svg.querySelector(".cross"), hl = svg.querySelector(".hl");
+  var data = JSON.parse(document.getElementById("trials").textContent);
+  var vbw = parseFloat(svg.getAttribute("data-vbw"));
+  var x0 = parseFloat(svg.getAttribute("data-x0")), dx = parseFloat(svg.getAttribute("data-dx"));
+  var pts = [];
+  [].forEach.call(svg.querySelectorAll(".pt"), function (p) { pts[+p.getAttribute("data-i")] = p; });
+  var bestIndex = 0, cur = -1;
+  data.forEach(function (d, i) { if (d.v > data[bestIndex].v) bestIndex = i; });
+
+  function lang() { return root.getAttribute("data-lang") === "zh" ? "zh" : "en"; }
+
+  function words() {
+    if (lang() === "zh") {
+      return { ev: function (i) { return "第 " + i + " 次评测"; }, start: "起始程序", kept: "保留", not: "未保留",
+               chart: "折线图：每个版本在 val 上的 Spearman，25 次评测里从 0.308 升到 0.370；ESM-2 650M 为 0.412。" };
+    }
+    return { ev: function (i) { return "Evaluation " + i; }, start: "starting program", kept: "kept", not: "not kept",
+             chart: "Chart: Spearman on val of each version over 25 evaluations, rising from 0.308 to 0.370. ESM-2 650M scores 0.412." };
+  }
+
+  function verdict(d, w) { return d.k === "start" ? w.start : (d.k === "kept" ? w.kept : w.not); }
+
+  function fill(i) {
+    var d = data[i], w = words();
+    tip.querySelector(".tv").textContent = d.v.toFixed(3);
+    tip.querySelector(".ts").textContent = w.ev(d.t) + " · " + verdict(d, w);
+    tip.querySelector(".td").textContent = d.k === "start" ? "" : d.d;
+    live.textContent = w.ev(d.t) + ", " + d.v.toFixed(3) + ", " + verdict(d, w);
+  }
+
+  function show(i) {
+    cur = i;
+    var p = pts[i], cx = parseFloat(p.getAttribute("cx")), cy = parseFloat(p.getAttribute("cy"));
+    cross.setAttribute("x1", cx); cross.setAttribute("x2", cx); cross.removeAttribute("hidden");
+    hl.setAttribute("cx", cx); hl.setAttribute("cy", cy); hl.removeAttribute("hidden");
+    fill(i);
+    tip.hidden = false;
+    var r = svg.getBoundingClientRect(), b = box.getBoundingClientRect(), s = r.width / vbw;
+    var px = (r.left - b.left) + cx * s, py = (r.top - b.top) + cy * s;
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = px + 14;
+    if (left + w > b.width - 4) left = px - w - 14;
+    if (left < 4) left = 4;
+    var top = py - h - 12;
+    if (top < 4) top = py + 14;
+    tip.style.left = left + "px"; tip.style.top = top + "px";
+  }
+
+  function hide() {
+    cur = -1; tip.hidden = true;
+    cross.setAttribute("hidden", ""); hl.setAttribute("hidden", "");
+  }
+
+  function indexAt(clientX) {
+    var r = svg.getBoundingClientRect();
+    var i = Math.round(((clientX - r.left) * (vbw / r.width) - x0) / dx);
+    return Math.max(0, Math.min(data.length - 1, i));
+  }
+
+  svg.addEventListener("pointermove", function (e) { show(indexAt(e.clientX)); });
+  svg.addEventListener("pointerdown", function (e) { show(indexAt(e.clientX)); });
+  svg.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse" && document.activeElement !== svg) hide(); });
+  document.addEventListener("pointerdown", function (e) { if (!svg.contains(e.target)) hide(); });
+  svg.addEventListener("focus", function () { show(bestIndex); });
+  svg.addEventListener("blur", hide);
+  svg.addEventListener("keydown", function (e) {
+    var i = cur < 0 ? bestIndex : cur;
+    if (e.key === "ArrowRight") i = Math.min(data.length - 1, i + 1);
+    else if (e.key === "ArrowLeft") i = Math.max(0, i - 1);
+    else if (e.key === "Home") i = 0;
+    else if (e.key === "End") i = data.length - 1;
+    else if (e.key === "Escape") { hide(); return; }
+    else return;
+    e.preventDefault();
+    show(i);
+  });
+
+  function setLang(l, save) {
+    root.setAttribute("data-lang", l);
+    root.lang = l === "zh" ? "zh-CN" : "en";
+    btnEn.setAttribute("aria-pressed", l === "en" ? "true" : "false");
+    btnZh.setAttribute("aria-pressed", l === "zh" ? "true" : "false");
+    svg.setAttribute("aria-label", words().chart);
+    if (cur >= 0) fill(cur);
+    if (save) { try { localStorage.setItem("rsi-lang", l); } catch (err) {} }
+  }
+  btnEn.addEventListener("click", function () { setLang("en", true); });
+  btnZh.addEventListener("click", function () { setLang("zh", true); });
+
+  var saved = null;
+  try { saved = localStorage.getItem("rsi-lang"); } catch (err) {}
+  var nav = (navigator.language || "").toLowerCase();
+  setLang(saved === "zh" || saved === "en" ? saved : (nav.indexOf("zh") === 0 ? "zh" : "en"), false);
+})();
+</script>
+</body>
+</html>
