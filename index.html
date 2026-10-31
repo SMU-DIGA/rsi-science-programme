@@ -18,7 +18,7 @@
 :root{
   --bg:#F5F7FA; --surface:#FFFFFF; --ink:#0B1B33; --ink-2:#44546B; --ink-3:#5A6A82; --rule:#D9E0EA; --track:#E3E9F1;
   --neural:#0B3A75; --neural-soft:#E3EBF8; --symbolic-ink:#8F4C00; --symbolic-soft:#FDEBD0;
-  --mark-prog:#D37812; --mark-net:#3267B8;
+  --mark-prog:#D37812; --mark-net:#3267B8; --symbolic-display:#D37812;
   --slab-bg:#071B38; --slab-card:#0E2A52; --slab-ink:#F3F7FD; --slab-ink-2:#B9C8DE; --slab-ink-3:#8DA0BD;
   --slab-rule:#24426F; --slab-amber:#FFB02E; --slab-blue:#8DB6F5;
   --s-prog:#D37812; --s-net:#5B92E7; --s-mute:#7088A9;
@@ -30,7 +30,7 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#07111F; --surface:#0D1B2F; --ink:#E8EEF7; --ink-2:#A9B8CD; --ink-3:#8294AE; --rule:#1D2E47; --track:#16263D;
-    --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008;
+    --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008; --symbolic-display:#FFB02E;
     --mark-prog:#D37812; --mark-net:#5B92E7;
     --logo-navy-a:#8DB6F5; --logo-navy-b:#5A8AD6; --logo-navy:#7FA8E8;
     color-scheme:dark;
@@ -38,7 +38,7 @@
 }
 :root[data-theme="dark"]{
   --bg:#07111F; --surface:#0D1B2F; --ink:#E8EEF7; --ink-2:#A9B8CD; --ink-3:#8294AE; --rule:#1D2E47; --track:#16263D;
-  --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008;
+  --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008; --symbolic-display:#FFB02E;
   --mark-prog:#D37812; --mark-net:#5B92E7;
   --logo-navy-a:#8DB6F5; --logo-navy-b:#5A8AD6; --logo-navy:#7FA8E8;
   color-scheme:dark;
@@ -60,35 +60,39 @@ a{color:inherit}
 .lang button{font:500 .8125rem/1 var(--body);padding:7px 13px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);cursor:pointer}
 .lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 
-/* hero */
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:center;padding-block:clamp(20px,5vw,64px) clamp(36px,6vw,72px)}
-.hero-art{order:-1}
-.logo{display:block;width:clamp(120px,30vw,150px);height:auto}
-.title{font:500 clamp(2.05rem,4.7vw,3.7rem)/1.07 var(--disp);letter-spacing:-.012em;margin:0;text-wrap:balance;max-width:20ch}
+/* hero: the logo is as tall as the title and the lede together, and sits next to them */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center;padding-block:clamp(8px,3vw,44px) clamp(40px,6vw,80px)}
+.logo{display:block;width:clamp(140px,42vw,190px);height:auto}
+.title{font:500 clamp(1.95rem,6.2vw,2.5rem)/1.1 var(--disp);letter-spacing:-.012em;margin:0;text-wrap:balance}
 .nb{white-space:nowrap}
-.t-n{color:var(--neural)} .t-s{color:var(--symbolic-ink)}
-.title-zh{font:500 1.2rem/1.4 var(--disp);color:var(--ink-2);margin:14px 0 0}
-.lede{font-size:1.125rem;line-height:1.55;color:var(--ink-2);max-width:46ch;margin:22px 0 0}
-@media(min-width:820px){
-  .hero .wrap{grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,6vw,80px)}
-  .hero-art{order:0}
-  .logo{width:clamp(200px,22vw,280px)}
+.t-n{color:var(--neural)} .t-s{color:var(--symbolic-display)}
+.title-zh{font:500 1.2rem/1.4 var(--disp);color:var(--ink-2);margin:12px 0 0}
+.lede{font-size:1.125rem;line-height:1.55;color:var(--ink-2);max-width:46ch;margin:20px 0 0}
+@media(min-width:720px){
+  .hero .wrap{grid-template-columns:clamp(160px,25vw,320px) minmax(0,1fr);gap:clamp(32px,5vw,72px)}
+  .logo{width:100%}
+  .title{font-size:clamp(2.2rem,4.1vw,3.4rem);max-width:23ch}
 }
 
 /* the slab: the two claims */
 .slab{background:var(--slab-bg);color:var(--slab-ink);border-block:1px solid var(--slab-rule)}
-.slab .wrap{padding-block:clamp(40px,7vw,88px)}
-.pillars{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(48px,7vw,64px)}
-@media(min-width:980px){.pillars{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,5vw,80px)}}
-.num{font:italic 400 1.5rem/1 var(--disp);color:var(--slab-ink-3);margin:0 0 14px}
+.slab .wrap{padding-block:clamp(8px,2vw,24px)}
+.pillars{display:grid;grid-template-columns:minmax(0,1fr)}
+.pillar{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;padding-block:clamp(36px,6vw,64px)}
+.pillar+.pillar{border-top:1px solid var(--slab-rule)}
+@media(min-width:980px){.pillar{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(40px,5vw,72px);align-items:start}}
+.num{font:italic 400 2.25rem/1 var(--disp);color:var(--slab-ink-3);margin:0 0 12px}
 .claim{font:500 clamp(2rem,3.7vw,3.1rem)/1.06 var(--disp);letter-spacing:-.01em;margin:0 0 18px;text-wrap:balance}
 .claim .a{color:var(--slab-amber)} .claim .b{color:var(--slab-blue)}
 .para{color:var(--slab-ink-2);max-width:56ch;margin:0 0 12px}
-.goal{color:var(--slab-ink);font-weight:500;max-width:56ch;margin:0 0 26px}
+.goal{color:var(--slab-ink);font-weight:500;max-width:56ch;margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px clamp(14px,3vw,36px);margin:28px 0 0;padding:0;list-style:none;max-width:460px}
+.stats b{display:block;font:500 clamp(1.5rem,6vw,2.3rem)/1 var(--disp);color:var(--slab-ink)}
+.stats span{display:block;margin-top:7px;font-size:.8125rem;line-height:1.35;color:var(--slab-ink-3)}
 .proof{margin:0;min-width:0;background:var(--slab-card);border:1px solid var(--slab-rule);border-radius:10px;padding:16px 16px 14px}
 .proof .cap{color:var(--slab-ink-2);font-size:.875rem;line-height:1.5;margin:12px 0 0}
 .codewrap{overflow-x:auto}
-.code{margin:0;font:400 .8125rem/1.7 var(--mono);color:var(--slab-ink);white-space:pre}
+.code{margin:0;font:400 clamp(.75rem,3.2vw,.8125rem)/1.7 var(--mono);color:var(--slab-ink);white-space:pre}
 .code .cm{color:var(--slab-ink-3)} .code .am{color:var(--slab-amber);font-weight:500}
 
 .chartbox{position:relative}
@@ -126,24 +130,34 @@ a{color:inherit}
 h2{font:500 clamp(1.5rem,2.6vw,2rem)/1.15 var(--disp);letter-spacing:-.005em;margin:0 0 6px}
 .sub{color:var(--ink-2);margin:0 0 28px;max-width:62ch}
 
+.loopfig{--gap:92px;margin:0}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr)}
-.step{min-width:0;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px}
-.chip{display:inline-block;font:500 .6875rem/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;padding:5px 7px;border-radius:4px;margin-bottom:10px}
+.step{min-width:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px}
+.chip{display:inline-block;font:500 .6875rem/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;padding:5px 7px;border-radius:4px;margin-bottom:10px;align-self:flex-start}
 .chip.n{background:var(--neural-soft);color:var(--neural)}
 .chip.s{background:var(--symbolic-soft);color:var(--symbolic-ink)}
 .chip.d{background:var(--track);color:var(--ink-2)}
 .step h3{font:600 1.0625rem/1.3 var(--body);margin:0 0 6px}
 .step p{margin:0;color:var(--ink-2);font-size:.9375rem;line-height:1.5}
-.inner{margin-top:12px;border:1px dashed var(--ink-3);border-radius:8px;padding:9px 11px;font-size:.875rem;line-height:1.45;color:var(--ink-2)}
+.step p:not(.ex){margin-bottom:12px}
+.step .ex{margin-top:auto;padding-top:14px;font-size:.8125rem;line-height:1.45;color:var(--ink-3)}
+.inner{margin-top:auto;border:1px dashed var(--ink-3);border-radius:8px;padding:9px 11px;font-size:.875rem;line-height:1.45;color:var(--ink-2)}
 .arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;color:var(--ink-3)}
 .alabel{font:400 .75rem/1 var(--mono);letter-spacing:.04em;margin-bottom:6px}
 .aline{position:relative;display:block;width:2px;height:26px;background:currentColor}
 .aline::after{content:"";position:absolute;left:-4px;bottom:-1px;border-top:8px solid currentColor;border-left:5px solid transparent;border-right:5px solid transparent}
 @media(min-width:900px){
-  .steps{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr)}
-  .arrow{padding:0 10px;min-width:92px}
+  .steps{grid-template-columns:minmax(0,1fr) var(--gap) minmax(0,1fr) var(--gap) minmax(0,1fr) var(--gap) minmax(0,1fr)}
+  .arrow{padding:0 10px}
   .aline{width:100%;height:2px}
   .aline::after{left:auto;right:-1px;bottom:auto;top:-4px;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid currentColor;border-right:0}
+}
+.rail{display:none}
+@media(min-width:900px){
+  .rail{display:block;position:relative;height:54px;margin:0 calc((100% - 3 * var(--gap)) / 8) 30px;border:2px solid var(--ink-3);border-top:0;border-radius:0 0 14px 14px}
+  .rail::before{content:"";position:absolute;left:-6px;top:-2px;border-bottom:9px solid var(--ink-3);border-left:5px solid transparent;border-right:5px solid transparent}
+  .rail .rlabel{position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);background:var(--bg);padding:0 14px;white-space:nowrap;font-size:.875rem;color:var(--ink-2)}
+  .return{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0)}
 }
 .return{margin-top:14px;display:flex;gap:12px;align-items:flex-start;border:1px solid var(--rule);border-radius:10px;padding:12px 14px;background:var(--surface);color:var(--ink-2);font-size:.9375rem}
 .return .glyph{font:500 1.25rem/1 var(--mono);color:var(--ink-3)}
@@ -199,14 +213,8 @@ footer a{color:var(--ink-2)}
 
 <section class="hero">
   <div class="wrap">
-    <div class="hero-text">
-      <h1 class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive Self-Improvement for Interpretable Science Discovery</h1>
-      <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
-      <p class="lede" lang="en">The LLM is the neural part and writes code. The code is the symbolic part and is the scientific model.</p>
-      <p class="lede" lang="zh-CN">LLM 是 neural 部分，负责写代码；代码是 symbolic 部分，就是最终的科学模型。</p>
-    </div>
     <div class="hero-art">
-      <svg class="logo" viewBox="0 0 1024 1024" fill="none" role="img" aria-label="RSI-Science logo">
+      <svg class="logo" viewBox="105 78 855 855" fill="none" role="img" aria-label="RSI-Science logo">
         <defs><linearGradient id="lg-navy" x1="180" y1="200" x2="790" y2="900" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-navy-a)"/><stop offset="1" style="stop-color:var(--logo-navy-b)"/></linearGradient><linearGradient id="lg-amber" x1="610" y1="100" x2="890" y2="800" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-amber-a)"/><stop offset="1" style="stop-color:var(--logo-amber-b)"/></linearGradient></defs>
         <g id="recursive-loop">
           <path d="M 737 836 A 386 386 0 0 0 666 138" stroke="url(#lg-amber)" stroke-width="50" stroke-linecap="round"/>
@@ -227,6 +235,12 @@ footer a{color:var(--ink-2)}
         <path id="discovery-spark" d="M 553 455 C 568 513 572 516 622 531 C 572 546 568 550 553 607 C 538 550 534 546 484 531 C 534 516 538 513 553 455 Z" fill="url(#lg-amber)"/>
       </svg>
     </div>
+    <div class="hero-text">
+      <h1 class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive <span class="nb">Self-Improvement</span> for Interpretable Science Discovery</h1>
+      <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
+      <p class="lede" lang="en">The LLM is the neural part and writes code. The code is the symbolic part and is the scientific model.</p>
+      <p class="lede" lang="zh-CN">LLM 是 neural 部分，负责写代码；代码是 symbolic 部分，就是最终的科学模型。</p>
+    </div>
   </div>
 </section>
 
@@ -236,35 +250,50 @@ footer a{color:var(--ink-2)}
     <div class="pillars">
 
       <article class="pillar">
-        <p class="num">i</p>
-        <h3 class="claim" lang="en"><span class="a">Code</span> is enough.</h3>
-        <h3 class="claim" lang="zh-CN"><span class="a">代码</span>就够了。</h3>
-        <p class="para" lang="en">A scientific model can be a program: rules, equations and algorithms in numpy and scipy, with no neural network inside. Code is symbolic. You can read it, check it, test it and edit it, and its describe() states every term and what it means.</p>
-        <p class="para" lang="zh-CN">科学模型可以就是一个程序：规则、方程、算法，只用 numpy 和 scipy，里面没有神经网络。代码是符号化的，可以读、可以查、可以测试、可以改，describe() 会写明每一项及其含义。</p>
-        <p class="goal" lang="en">The goal is to match SOTA networks such as AlphaFold, ESM and MatterGen on their own benchmarks, on the same held-out cases.</p>
-        <p class="goal" lang="zh-CN">目标是在 AlphaFold、ESM、MatterGen 这类 SOTA 网络自己的 benchmark 上，在同样的留出 case 上与它们持平。</p>
+        <div class="ptext">
+          <p class="num">i</p>
+          <h3 class="claim" lang="en"><span class="a">Code</span> is enough.</h3>
+          <h3 class="claim" lang="zh-CN"><span class="a">代码</span>就够了。</h3>
+          <p class="para" lang="en">A scientific model can be a program: rules, equations and algorithms in numpy and scipy, with no neural network inside. Code is symbolic. You can read it, check it, test it and edit it, and its describe() states every term and what it means.</p>
+          <p class="para" lang="zh-CN">科学模型可以就是一个程序：规则、方程、算法，只用 numpy 和 scipy，里面没有神经网络。代码是符号化的，可以读、可以查、可以测试、可以改，describe() 会写明每一项及其含义。</p>
+          <p class="goal" lang="en">The goal is to match SOTA networks such as AlphaFold, ESM and MatterGen on their own benchmarks, on the same held-out cases.</p>
+          <p class="goal" lang="zh-CN">目标是在 AlphaFold、ESM、MatterGen 这类 SOTA 网络自己的 benchmark 上，在同样的留出 case 上与它们持平。</p>
+          <ul class="stats">
+            <li><b>176</b><span lang="en">lines in the best program</span><span lang="zh-CN">最好程序的行数</span></li>
+            <li><b>79</b><span lang="en">features in the model</span><span lang="zh-CN">模型里的特征数</span></li>
+            <li><b>0</b><span lang="en">neural networks inside</span><span lang="zh-CN">里面的神经网络</span></li>
+          </ul>
+        </div>
         <figure class="proof">
-          <div class="codewrap"><pre class="code"><code><span class="cm"># describe() of the best program of a real run (excerpt)</span>
-score(i, a-&gt;b) = x(i) . w_site + x(i) . W[:, b]
-<span class="cm"># fitted by ridge regression on centred within-assay ranks of fitness</span>
-x(i) features (w_site shape (79,), W shape (79, 20)):
-  wt=I: site -0.021; per replacement ... L<span class="am">+0.19</span> M+0.10 ... V<span class="am">+0.21</span> ...
-  wt=K: site +0.005; per replacement ... Q+0.06 R<span class="am">+0.19</span> ...
-  wt=D: site +0.001; per replacement ... E<span class="am">+0.13</span> ... N+0.09 ...
-  wt=F: site -0.039; per replacement ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
+          <div class="codewrap"><pre class="code"><code><span class="cm"># describe() of the best program (excerpt)</span>
+score(i, a-&gt;b) =
+  x(i) . w_site + x(i) . W[:, b]
+<span class="cm"># ridge on within-assay fitness ranks</span>
+x(i): 79 features; W shape (79, 20)
+wt=I: ... L<span class="am">+0.19</span> M+0.10 ... V<span class="am">+0.21</span> ...
+wt=K: ... Q+0.06 R<span class="am">+0.19</span> ...
+wt=D: ... E<span class="am">+0.13</span> ... N+0.09 ...
+wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
           <p class="cap" lang="en">It learned that isoleucine tolerates leucine and valine, lysine tolerates arginine, aspartate tolerates glutamate and phenylalanine tolerates tyrosine. A higher weight means more tolerated.</p>
           <p class="cap" lang="zh-CN">它学到：异亮氨酸能容忍亮氨酸和缬氨酸，赖氨酸能容忍精氨酸，天冬氨酸能容忍谷氨酸，苯丙氨酸能容忍酪氨酸。权重越高，越能容忍。</p>
         </figure>
       </article>
 
       <article class="pillar">
-        <p class="num">ii</p>
-        <h3 class="claim" lang="en"><span class="b">Self-improvement</span> maxes out the code.</h3>
-        <h3 class="claim" lang="zh-CN"><span class="b">自我改进</span>把代码榨到极致。</h3>
-        <p class="para" lang="en">The LLM writes the program. A loop scores every version on held-out data, keeps what holds up and feeds the evidence back. An inner search tunes the knobs at machine speed. The LLM makes the changes a search cannot: new terms and new forms. A new run starts from the best program of the last.</p>
-        <p class="para" lang="zh-CN">LLM 写出程序。循环在留出数据上给每个版本打分，留下站得住的，再把证据交回去。内层搜索按机器速度调旋钮；LLM 做搜索做不到的改动：新的项、新的形式。新的 run 从上一个 run 的最好程序接着做。</p>
-        <p class="goal" lang="en">The aim is code-maxing: the best performance a program can reach.</p>
-        <p class="goal" lang="zh-CN">目标是 code-maxing：让程序能达到的性能最大化。</p>
+        <div class="ptext">
+          <p class="num">ii</p>
+          <h3 class="claim" lang="en"><span class="b">Self-improvement</span> maxes out the code.</h3>
+          <h3 class="claim" lang="zh-CN"><span class="b">自我改进</span>把代码榨到极致。</h3>
+          <p class="para" lang="en">The LLM writes the program. A loop scores every version on held-out data, keeps what holds up and feeds the evidence back. An inner search tunes the knobs at machine speed. The LLM makes the changes a search cannot: new terms and new forms. A new run starts from the best program of the last.</p>
+          <p class="para" lang="zh-CN">LLM 写出程序。循环在留出数据上给每个版本打分，留下站得住的，再把证据交回去。内层搜索按机器速度调旋钮；LLM 做搜索做不到的改动：新的项、新的形式。新的 run 从上一个 run 的最好程序接着做。</p>
+          <p class="goal" lang="en">The aim is code-maxing: the best performance a program can reach.</p>
+          <p class="goal" lang="zh-CN">目标是 code-maxing：让程序能达到的性能最大化。</p>
+          <ul class="stats">
+            <li><b>25</b><span lang="en">evaluations</span><span lang="zh-CN">次评测</span></li>
+            <li><b>2.8 h</b><span lang="en">of wall-clock time</span><span lang="zh-CN">耗时</span></li>
+            <li><b>+0.062</b><span lang="en">Spearman on val, 0.308 to 0.370</span><span lang="zh-CN">val 上的 Spearman，0.308 升到 0.370</span></li>
+          </ul>
+        </div>
         <figure class="proof">
           <div class="chartbox" id="chartbox">
             <svg id="chart" class="chart" viewBox="0 0 380 290" data-vbw="380" data-x0="44" data-dx="12.96" role="img" tabindex="0" aria-label="">
@@ -386,13 +415,15 @@ x(i) features (w_site shape (79,), W shape (79, 20)):
     <h2 lang="en">The loop</h2><h2 lang="zh-CN">循环</h2>
     <p class="sub" lang="en">Every accepted version is the base of the next.</p>
     <p class="sub" lang="zh-CN">每个被接受的版本都是下一版的起点。</p>
-    <figure style="margin:0">
+    <figure class="loopfig">
       <ol class="steps">
         <li class="step">
           <span class="chip n">neural</span>
           <h3>LLM</h3>
           <p lang="en">Reads the program, the notes and the evidence. Writes the next version.</p>
           <p lang="zh-CN">读程序、笔记和证据，写出下一个版本。</p>
+          <p class="ex" lang="en">Claude Opus 5.5 or Codex, in a sandbox.</p>
+          <p class="ex" lang="zh-CN">Claude Opus 5.5 或 Codex，在沙箱里。</p>
         </li>
         <li class="arrow" aria-hidden="true"><span class="alabel" lang="en">writes</span><span class="alabel" lang="zh-CN">写出</span><span class="aline"></span></li>
         <li class="step">
@@ -409,6 +440,8 @@ x(i) features (w_site shape (79,), W shape (79, 20)):
           <h3 lang="en">Held-out cases</h3><h3 lang="zh-CN">留出的 case</h3>
           <p lang="en">Cases it was not fitted on, the same cases the neural network is scored on.</p>
           <p lang="zh-CN">没拟合过的 case，和神经网络用的是同一批。</p>
+          <p class="ex" lang="en">Whole proteins, crystal systems or river basins are held out.</p>
+          <p class="ex" lang="zh-CN">整个蛋白、晶体体系或流域被留出。</p>
         </li>
         <li class="arrow" aria-hidden="true"><span class="alabel" lang="en">decides</span><span class="alabel" lang="zh-CN">判定</span><span class="aline"></span></li>
         <li class="step">
@@ -416,8 +449,11 @@ x(i) features (w_site shape (79,), W shape (79, 20)):
           <h3 lang="en">Keep what holds up</h3><h3 lang="zh-CN">留下站得住的</h3>
           <p lang="en">Kept if better, or smaller within noise. A second split checks it silently.</p>
           <p lang="zh-CN">更好才保留，或在噪声内更小也保留。另一个划分静默复核。</p>
+          <p class="ex" lang="en">val selects, confirm checks, test is read once.</p>
+          <p class="ex" lang="zh-CN">val 用来选，confirm 用来复核，test 只读一次。</p>
         </li>
       </ol>
+      <div class="rail" aria-hidden="true"><span class="rlabel" lang="en">Score, per-case regressions and diagnostics go back to the LLM</span><span class="rlabel" lang="zh-CN">分数、逐 case 回归和诊断回到 LLM</span></div>
       <figcaption>
         <div class="return"><span class="glyph" aria-hidden="true">&#8634;</span>
           <span lang="en">Score, per-case regressions and diagnostics go back to the LLM, which writes the next version.</span>
