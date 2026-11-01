@@ -600,6 +600,22 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
       </div>
 
       <div class="brow" role="row">
+        <div class="task" role="cell"><b>ProteinGym</b><span lang="en">Spearman, with alignments</span><span lang="zh-CN">Spearman，可读 MSA</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.396</b><span lang="en">starting program</span><span lang="zh-CN">起始程序</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.501</b></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.537</b><span lang="en">VenusREM, top of the leaderboard</span><span lang="zh-CN">VenusREM，榜单第一</span></div>
+        <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 74% of the gap" title="(0.501 - 0.396) / (0.537 - 0.396)"><span class="fill" style="width:74%"></span></div><span class="pct">74%</span></div>
+      </div>
+
+      <div class="brow" role="row">
+        <div class="task" role="cell"><b>Runs N' Poses</b><span lang="en">ligand pose success (RMSD &lt; 2 Å)</span><span lang="zh-CN">配体构象成功率（RMSD &lt; 2 Å）</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>29.1%</b><span lang="en">Vina-type docking</span><span lang="zh-CN">Vina 型对接</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>59.3%</b></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>64.3%</b><span>AlphaFold 3</span></div>
+        <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 86% of the gap" title="(59.3 - 29.1) / (64.3 - 29.1)"><span class="fill" style="width:86%"></span></div><span class="pct">86%</span></div>
+      </div>
+
+      <div class="brow" role="row">
         <div class="task" role="cell"><b lang="en">River flow</b><b lang="zh-CN">河流径流</b><span>median NSE</span></div>
         <div class="val" role="cell"><span class="k2"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.315</b><span>GloFAS</span></div>
         <div class="val" role="cell"><span class="k2"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.444</b></div>
@@ -615,8 +631,8 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
         <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 9% of the gap" title="(0.381 - 0.331) / (0.862 - 0.331)"><span class="fill" style="width:9%"></span></div><span class="pct">9%</span></div>
       </div>
     </div>
-    <p class="fine" lang="en">Gap closed = (ours - baseline) / (network - baseline). First runs, 2026-10-30 to 11-01, one run per cell. The tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric, which was then made strict. ProteinGym and Runs N' Poses have no results yet.</p>
-    <p class="fine" lang="zh-CN">缩小的差距 = (我们 - 基线) / (网络 - 基线)。首批 run（2026-10-30 至 11-01），每个格子只有一个 run。表格数据的比例用未取整的分数计算。晶体生成没有列入：它的首批 run 钻了指标的空子，指标随后被改严。ProteinGym 和 Runs N' Poses 还没有结果。</p>
+    <p class="fine" lang="en">Gap closed = (ours - baseline) / (network - baseline). First runs, 2026-10-30 to 11-01, one run per cell. The tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric, which was then made strict. ProteinGym: the program learns from the assays of other proteins, while the leaderboard's models are zero-shot; it also beats ESM-2 650M (0.435) and GEMME (0.433) on the same proteins. Runs N' Poses: the program redocks into the experimental receptor around the known pocket, an easier task than co-folding the complex from sequence; Chai-1 and Boltz-1x reach 59.1% and 59.6%.</p>
+    <p class="fine" lang="zh-CN">缩小的差距 = (我们 - 基线) / (网络 - 基线)。首批 run（2026-10-30 至 11-01），每个格子只有一个 run。表格数据的比例用未取整的分数计算。晶体生成没有列入：它的首批 run 钻了指标的空子，指标随后被改严。ProteinGym：程序从其他蛋白的 assay 中学习，榜单上的模型则是 zero-shot；在同样的蛋白上，它也超过了 ESM-2 650M（0.435）和 GEMME（0.433）。Runs N' Poses：程序是在实验测得的受体上、围绕已知口袋重新对接，比从序列共折叠整个复合物容易；Chai-1 和 Boltz-1x 分别是 59.1% 和 59.6%。</p>
   </div>
 </section>
 
