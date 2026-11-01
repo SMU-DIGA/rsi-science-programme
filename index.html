@@ -243,6 +243,7 @@ h2{margin:0;font:500 clamp(28px,3.6vw,40px)/1.15 var(--disp);letter-spacing:-.01
 .fill{position:absolute;left:0;top:0;bottom:0;background:var(--c-ours);border-radius:0 4px 4px 0}
 .pct{display:block;margin-top:7px;font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .fine{max-width:80ch;margin:22px 0 0;color:var(--ink-3);font-size:14px;line-height:1.6}
+@media(min-width:900px){#results .fine{max-width:none;column-count:2;column-gap:48px}}
 @media(max-width:759px){
   .hrow{display:none}
   .brow{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
