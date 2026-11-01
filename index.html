@@ -128,14 +128,14 @@ p{margin:0}
 @media(min-width:1000px){.toc ol{grid-template-columns:repeat(4,max-content);justify-content:space-between}}
 
 /* sections */
-main section{padding:clamp(52px,8vw,92px) 0;border-bottom:1px solid var(--rule)}
+main section{padding:clamp(34px,5vw,56px) 0;border-bottom:1px solid var(--rule)}
 .shead{display:flex;align-items:baseline;gap:16px;margin:0 0 10px}
 .num{flex:none;font:500 12px/1 var(--mono);letter-spacing:.14em;color:var(--ink-3)}
 h2{margin:0;font:500 clamp(28px,3.6vw,40px)/1.15 var(--disp);letter-spacing:-.012em;text-wrap:balance}
-.sub{margin:0 0 clamp(28px,4vw,46px);max-width:62ch;color:var(--ink-2)}
+.sub{margin:0 0 clamp(18px,2.4vw,26px);max-width:62ch;color:var(--ink-2)}
 
 /* the two claims */
-.claim-row{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,40px);padding:clamp(34px,5vw,56px) 0;border-top:1px solid var(--rule)}
+.claim-row{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,40px);padding:clamp(24px,3.4vw,38px) 0;border-top:1px solid var(--rule)}
 .claim-row:first-of-type{border-top:0;padding-top:0}
 .claim-row:last-of-type{padding-bottom:0}
 @media(min-width:980px){.claim-row{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(40px,5vw,72px);align-items:start}}
@@ -184,7 +184,7 @@ h2{margin:0;font:500 clamp(28px,3.6vw,40px)/1.15 var(--disp);letter-spacing:-.01
 .tbl th{color:var(--ink);font-weight:500}
 .tbl td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 
-.runs{margin-top:34px;font-size:14px}
+.runs{margin-top:18px;font-size:14px}
 .runs summary{font-size:16px;font-weight:600}
 .runs .tbl-scroll{max-height:none}
 .runs table{min-width:600px}
@@ -229,7 +229,7 @@ h2{margin:0;font:500 clamp(28px,3.6vw,40px)/1.15 var(--disp);letter-spacing:-.01
 .board{border-top:1px solid var(--rule-2)}
 .hrow,.brow{display:grid;grid-template-columns:minmax(150px,1.25fr) repeat(3,minmax(0,1fr)) minmax(190px,1.3fr);gap:0 20px;align-items:start;border-bottom:1px solid var(--rule)}
 .hrow{padding:12px 0;font:500 11px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.brow{padding:20px 0}
+.brow{padding:13px 0}
 .task{padding-top:5px}
 .gap{padding-top:11px}
 .task b{display:block;font-weight:600}
@@ -242,8 +242,8 @@ h2{margin:0;font:500 clamp(28px,3.6vw,40px)/1.15 var(--disp);letter-spacing:-.01
 .meter{position:relative;height:8px;background:var(--track);border-radius:4px;overflow:hidden}
 .fill{position:absolute;left:0;top:0;bottom:0;background:var(--c-ours);border-radius:0 4px 4px 0}
 .pct{display:block;margin-top:7px;font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
-.fine{max-width:80ch;margin:22px 0 0;color:var(--ink-3);font-size:14px;line-height:1.6}
-@media(min-width:900px){#results .fine{max-width:none;column-count:2;column-gap:48px}}
+.fine{margin:14px 0 0;color:var(--ink-3);font-size:14px;line-height:1.6}
+.fine b{color:var(--ink-2);font-weight:600}
 @media(max-width:759px){
   .hrow{display:none}
   .brow{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -640,12 +640,12 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
         <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 9% of the gap" title="(0.381 - 0.331) / (0.862 - 0.331)"><span class="fill" style="width:9%"></span></div><span class="pct">9%</span></div>
       </div>
     </div>
-    <p class="fine" lang="en">Gap closed = (ours - baseline) / (network - baseline). First runs, 2026-10-30 to 11-01, one run per cell. The tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric, which was then made strict. ProteinGym: the program learns from the assays of other proteins, while the leaderboard's models are zero-shot; it also beats ESM-2 650M (0.435) and GEMME (0.433) on the same proteins. Runs N' Poses: the program redocks into the experimental receptor around the known pocket, an easier task than co-folding the complex from sequence; Chai-1 and Boltz-1x reach 59.1% and 59.6%.</p>
-    <p class="fine" lang="zh-CN">缩小的差距 = (我们 - 基线) / (网络 - 基线)。首批 run（2026-10-30 至 11-01），每个格子只有一个 run。表格数据的比例用未取整的分数计算。晶体生成没有列入：它的首批 run 钻了指标的空子，指标随后被改严。ProteinGym：程序从其他蛋白的 assay 中学习，榜单上的模型则是 zero-shot；在同样的蛋白上，它也超过了 ESM-2 650M（0.435）和 GEMME（0.433）。Runs N' Poses：程序是在实验测得的受体上、围绕已知口袋重新对接，比从序列共折叠整个复合物容易；Chai-1 和 Boltz-1x 分别是 59.1% 和 59.6%。</p>
-    <details class="tbl runs" open>
+    <p class="fine" lang="en">Gap closed = (ours − baseline) / (network − baseline); one run per cell, first runs 2026-10-30 to 11-01; the tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric. <b>ProteinGym</b> learns from other proteins' assays, while the leaderboard's models are zero-shot; it also beats ESM-2 650M (0.435) and GEMME (0.433). <b>Runs N' Poses</b> redocks around the known pocket, easier than co-folding from sequence; Chai-1 and Boltz-1x reach 59.1% and 59.6%.</p>
+    <p class="fine" lang="zh-CN">缩小的差距 = (我们 − 基线) / (网络 − 基线)；每格一个 run，首批 run 为 2026-10-30 至 11-01；表格数据的比例用未取整的分数。晶体生成没有列入：它的首批 run 钻了指标的空子。<b>ProteinGym</b> 从其他蛋白的 assay 学习，榜单上的模型是 zero-shot；它也超过了 ESM-2 650M（0.435）和 GEMME（0.433）。<b>Runs N' Poses</b> 围绕已知口袋重新对接，比从序列共折叠容易；Chai-1 和 Boltz-1x 是 59.1% 和 59.6%。</p>
+    <details class="tbl runs">
       <summary><span lang="en">Every run: 19 runs, 455 evaluated versions</span><span lang="zh-CN">全部 run：19 个 run，共 455 个评测过的版本</span></summary>
-      <p class="fine" lang="en">One row per finished run, scored once on the test split with its best version. Gap closed runs from the starting program (or classical baseline) to the neural network, as above (the tabular rows use unrounded scores). Each row is a single run. On mutation effects the noise between two runs is about 0.005 to 0.010 on test, so neighbouring rows cannot be ranked, and the inner loop's lead in the four pairs is suggestive, not established. In three of the four tabular runs the agent skipped the inner loop in almost every evaluation, so those rows do not measure it. The river-flow search could evaluate only the starting configuration. Six crystal-generation runs are left out (the metric was gamed).</p>
-      <p class="fine" lang="zh-CN">每个已结束的 run 一行，用它最好的版本在 test 上只打一次分。缩小的差距从起始程序（或经典基线）算到神经网络，同上（表格数据的几行用未取整的分数）。每行只是一个 run。突变效应任务里，两个 run 之间的噪声在 test 上约 0.005 到 0.010，相邻的行排不出名次；四组对照里内循环领先，只是提示，不是定论。表格数据的四个 run 里，有三个 agent 几乎每次评测都跳过了内循环，这几行并不衡量内循环。河流径流的搜索只来得及评测起始配置。六个晶体生成 run 没有列入（指标被钻了空子）。</p>
+      <p class="fine" lang="en">One row per run, best version scored once on test. On mutation effects two runs differ by about 0.005 to 0.010 on test by chance, so neighbouring rows cannot be ranked. Three of the four tabular runs skipped the inner loop almost always; the river-flow search only evaluated the starting configuration. Six crystal-generation runs are left out.</p>
+      <p class="fine" lang="zh-CN">每个 run 一行，最好的版本在 test 上只打一次分。突变效应任务里两个 run 在 test 上相差约 0.005 到 0.010 是随机的，相邻的行排不出名次。表格数据的四个 run 里有三个几乎总是跳过内循环；河流径流的搜索只评测了起始配置。六个晶体生成 run 没有列入。</p>
       <div class="tbl-scroll">
         <table>
           <thead><tr>
