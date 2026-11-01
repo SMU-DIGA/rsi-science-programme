@@ -184,6 +184,14 @@ h2{margin:0;font:500 clamp(28px,3.6vw,40px)/1.15 var(--disp);letter-spacing:-.01
 .tbl th{color:var(--ink);font-weight:500}
 .tbl td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 
+.runs{margin-top:34px;font-size:14px}
+.runs summary{font-size:16px;font-weight:600}
+.runs .tbl-scroll{max-height:none}
+.runs table{min-width:600px}
+.runs tr.grp th{padding-top:18px;border-bottom:1px solid var(--rule-2);font-weight:600;color:var(--ink)}
+.runs tr.grp .u{margin-left:10px;color:var(--ink-3);font-weight:400;font-size:13px}
+.runs td b{font-weight:600;color:var(--ink)}
+
 /* the loop */
 .loopfig{--gap:92px;margin:0}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr)}
@@ -633,6 +641,50 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
     </div>
     <p class="fine" lang="en">Gap closed = (ours - baseline) / (network - baseline). First runs, 2026-10-30 to 11-01, one run per cell. The tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric, which was then made strict. ProteinGym: the program learns from the assays of other proteins, while the leaderboard's models are zero-shot; it also beats ESM-2 650M (0.435) and GEMME (0.433) on the same proteins. Runs N' Poses: the program redocks into the experimental receptor around the known pocket, an easier task than co-folding the complex from sequence; Chai-1 and Boltz-1x reach 59.1% and 59.6%.</p>
     <p class="fine" lang="zh-CN">缩小的差距 = (我们 - 基线) / (网络 - 基线)。首批 run（2026-10-30 至 11-01），每个格子只有一个 run。表格数据的比例用未取整的分数计算。晶体生成没有列入：它的首批 run 钻了指标的空子，指标随后被改严。ProteinGym：程序从其他蛋白的 assay 中学习，榜单上的模型则是 zero-shot；在同样的蛋白上，它也超过了 ESM-2 650M（0.435）和 GEMME（0.433）。Runs N' Poses：程序是在实验测得的受体上、围绕已知口袋重新对接，比从序列共折叠整个复合物容易；Chai-1 和 Boltz-1x 分别是 59.1% 和 59.6%。</p>
+    <details class="tbl runs" open>
+      <summary><span lang="en">Every run: 19 runs, 455 evaluated versions</span><span lang="zh-CN">全部 run：19 个 run，共 455 个评测过的版本</span></summary>
+      <p class="fine" lang="en">One row per finished run, scored once on the test split with its best version. Gap closed runs from the starting program (or classical baseline) to the neural network, as above (the tabular rows use unrounded scores). Each row is a single run. On mutation effects the noise between two runs is about 0.005 to 0.010 on test, so neighbouring rows cannot be ranked, and the inner loop's lead in the four pairs is suggestive, not established. In three of the four tabular runs the agent skipped the inner loop in almost every evaluation, so those rows do not measure it. The river-flow search could evaluate only the starting configuration. Six crystal-generation runs are left out (the metric was gamed).</p>
+      <p class="fine" lang="zh-CN">每个已结束的 run 一行，用它最好的版本在 test 上只打一次分。缩小的差距从起始程序（或经典基线）算到神经网络，同上（表格数据的几行用未取整的分数）。每行只是一个 run。突变效应任务里，两个 run 之间的噪声在 test 上约 0.005 到 0.010，相邻的行排不出名次；四组对照里内循环领先，只是提示，不是定论。表格数据的四个 run 里，有三个 agent 几乎每次评测都跳过了内循环，这几行并不衡量内循环。河流径流的搜索只来得及评测起始配置。六个晶体生成 run 没有列入（指标被钻了空子）。</p>
+      <div class="tbl-scroll">
+        <table>
+          <thead><tr>
+            <th>Agent</th>
+            <th><span lang="en">Source</span><span lang="zh-CN">来源</span></th>
+            <th>Test</th>
+            <th><span lang="en">Gap closed</span><span lang="zh-CN">缩小的差距</span></th>
+            <th><span lang="en">Evals</span><span lang="zh-CN">评测数</span></th>
+            <th><span lang="en">Inner loop</span><span lang="zh-CN">内循环</span></th>
+          </tr></thead>
+          <tbody>
+            <tr class="grp"><th colspan="6"><span lang="en">Mutation effects</span><span lang="zh-CN">突变效应</span><span class="u">Spearman; <span lang="en">start</span><span lang="zh-CN">起点</span> 0.322, <span lang="en">network</span><span lang="zh-CN">网络</span> 0.445</span></th></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.380</b></td><td class="n">47%</td><td class="n">25</td><td><span lang="en">600 s search</span><span lang="zh-CN">600 秒搜索</span></td></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.376</b></td><td class="n">44%</td><td class="n">35</td><td><span lang="en">none</span><span lang="zh-CN">无</span></td></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.386</b></td><td class="n">52%</td><td class="n">34</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">API</span><span lang="zh-CN">API</span></td><td class="n"><b>0.373</b></td><td class="n">41%</td><td class="n">12</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">weights</span><span lang="zh-CN">权重</span></td><td class="n"><b>0.384</b></td><td class="n">50%</td><td class="n">18</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.368</b></td><td class="n">37%</td><td class="n">26</td><td><span lang="en">600 s search</span><span lang="zh-CN">600 秒搜索</span></td></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.365</b></td><td class="n">35%</td><td class="n">26</td><td><span lang="en">none</span><span lang="zh-CN">无</span></td></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">API</span><span lang="zh-CN">API</span></td><td class="n"><b>0.386</b></td><td class="n">52%</td><td class="n">26</td><td><span lang="en">600 s search</span><span lang="zh-CN">600 秒搜索</span></td></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">API</span><span lang="zh-CN">API</span></td><td class="n"><b>0.378</b></td><td class="n">46%</td><td class="n">26</td><td><span lang="en">none</span><span lang="zh-CN">无</span></td></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">weights</span><span lang="zh-CN">权重</span></td><td class="n"><b>0.369</b></td><td class="n">38%</td><td class="n">26</td><td><span lang="en">600 s search</span><span lang="zh-CN">600 秒搜索</span></td></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">weights</span><span lang="zh-CN">权重</span></td><td class="n"><b>0.354</b></td><td class="n">26%</td><td class="n">26</td><td><span lang="en">none</span><span lang="zh-CN">无</span></td></tr>
+            <tr class="grp"><th colspan="6"><span lang="en">ProteinGym</span><span lang="zh-CN">ProteinGym</span><span class="u">Spearman; <span lang="en">start</span><span lang="zh-CN">起点</span> 0.396, <span lang="en">network</span><span lang="zh-CN">网络</span> 0.537</span></th></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">data + MSA</span><span lang="zh-CN">数据 + MSA</span></td><td class="n"><b>0.501</b></td><td class="n">74%</td><td class="n">29</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
+            <tr class="grp"><th colspan="6"><span lang="en">Runs N' Poses</span><span lang="zh-CN">Runs N' Poses</span><span class="u">success; <span lang="en">start</span><span lang="zh-CN">起点</span> 29.1%, <span lang="en">network</span><span lang="zh-CN">网络</span> 64.3%</span></th></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>59.3%</b></td><td class="n">86%</td><td class="n">27</td><td><span lang="en">agent's choice</span><span lang="zh-CN">由 agent 决定</span></td></tr>
+            <tr class="grp"><th colspan="6"><span lang="en">Tabular classification</span><span lang="zh-CN">表格数据分类</span><span class="u">ROC AUC; <span lang="en">start</span><span lang="zh-CN">起点</span> 0.872, <span lang="en">network</span><span lang="zh-CN">网络</span> 0.931</span></th></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.921</b></td><td class="n">80%</td><td class="n">30</td><td><span lang="en">none</span><span lang="zh-CN">无</span></td></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.924</b></td><td class="n">90%</td><td class="n">17</td><td><span lang="en">planned for every evaluation, ran before 1 of 17</span><span lang="zh-CN">计划每次评测前，实际 17 次里只跑了 1 次</span></td></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.920</b></td><td class="n">75%</td><td class="n">26</td><td><span lang="en">agent's choice, ran before 1 of 26</span><span lang="zh-CN">由 agent 决定，26 次里只跑了 1 次</span></td></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.921</b></td><td class="n">78%</td><td class="n">23</td><td><span lang="en">before every evaluation, CV gate</span><span lang="zh-CN">每次评测前，带 CV 门</span></td></tr>
+            <tr class="grp"><th colspan="6"><span lang="en">River flow</span><span lang="zh-CN">河流径流</span><span class="u">median NSE; <span lang="en">start</span><span lang="zh-CN">起点</span> 0.315, <span lang="en">network</span><span lang="zh-CN">网络</span> 0.583</span></th></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.444</b></td><td class="n">48%</td><td class="n">5</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
+            <tr class="grp"><th colspan="6"><span lang="en">Crystal stability</span><span lang="zh-CN">晶体稳定性</span><span class="u">F1; <span lang="en">start</span><span lang="zh-CN">起点</span> 0.331, <span lang="en">network</span><span lang="zh-CN">网络</span> 0.862</span></th></tr>
+            <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.381</b></td><td class="n">9%</td><td class="n">18</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
   </div>
 </section>
 
