@@ -10,140 +10,195 @@
 <meta property="og:title" content="RSI-Science">
 <meta property="og:description" content="Neural-symbolic recursive self-improvement for interpretable science discovery. Code is enough, and self-improvement maxes out the code.">
 <meta name="twitter:card" content="summary">
-<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<meta name="theme-color" content="#EEF2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A1322" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
 <style>
-/* Layout concept: a thesis poster. A quiet page, with one navy slab that carries the two claims.
-   Colour has one meaning everywhere: blue = neural, amber = symbolic (the code). */
+/* Layout concept: a programme note on ruled paper. One quiet column, mono labels, thin rules, one large wordmark.
+   Colour keeps a single meaning: indigo = neural (the LLM), teal = symbolic (the code). Cool tones only. */
 :root{
-  --bg:#F5F7FA; --surface:#FFFFFF; --ink:#0B1B33; --ink-2:#44546B; --ink-3:#5A6A82; --rule:#D9E0EA; --track:#E3E9F1;
-  --neural:#0B3A75; --neural-soft:#E3EBF8; --symbolic-ink:#8F4C00; --symbolic-soft:#FDEBD0;
-  --mark-prog:#D37812; --mark-net:#3267B8; --symbolic-display:#D37812;
-  --slab-bg:#071B38; --slab-card:#0E2A52; --slab-ink:#F3F7FD; --slab-ink-2:#B9C8DE; --slab-ink-3:#8DA0BD;
-  --slab-rule:#24426F; --slab-amber:#FFB02E; --slab-blue:#8DB6F5;
-  --s-prog:#D37812; --s-net:#5B92E7; --s-mute:#7088A9;
-  --logo-navy-a:#092C58; --logo-navy-b:#052044; --logo-navy:#082951; --logo-amber-a:#FFA512; --logo-amber-b:#F58A00;
+  --paper:#EEF2F7; --surface:#FAFBFD; --card:#E5EBF3;
+  --ink:#0E1A2B; --ink-2:#435268; --ink-3:#58677E;
+  --rule:#D0D9E5; --rule-2:#B9C5D6; --lines:rgba(14,26,43,.035);
+  --neural-ink:#2B45C5; --neural-soft:#E2E8FB; --sym-ink:#0A747B; --sym-soft:#D8F0F1;
+  --c-ours:#0E9CA2; --c-net:#2B45C5; --mute:#7C8BA3; --track:#D2ECEE;
+  --logo-navy-a:#092C58; --logo-navy-b:#052044; --logo-navy:#082951; --logo-sym-a:#19B8BC; --logo-sym-b:#0A8F98;
+  --shadow:0 1px 2px rgba(14,26,43,.05),0 14px 34px -22px rgba(14,26,43,.30);
   --disp:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","Noto Serif CJK SC",serif;
   --body:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#07111F; --surface:#0D1B2F; --ink:#E8EEF7; --ink-2:#A9B8CD; --ink-3:#8294AE; --rule:#1D2E47; --track:#16263D;
-    --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008; --symbolic-display:#FFB02E;
-    --mark-prog:#D37812; --mark-net:#5B92E7;
-    --logo-navy-a:#8DB6F5; --logo-navy-b:#5A8AD6; --logo-navy:#7FA8E8;
+    --paper:#0A1322; --surface:#101C30; --card:#16253D;
+    --ink:#E8EEF8; --ink-2:#A9B8CE; --ink-3:#8E9DB6;
+    --rule:#1F3150; --rule-2:#2B4166; --lines:rgba(255,255,255,.03);
+    --neural-ink:#9DB4FF; --neural-soft:#17254A; --sym-ink:#5FD6DB; --sym-soft:#0F3138;
+    --c-ours:#19A9B0; --c-net:#3E5FE1; --mute:#6B7C98; --track:#12363C;
+    --logo-navy-a:#9DB4FF; --logo-navy-b:#6E8FF0; --logo-navy:#8AA5F5; --logo-sym-a:#5FE0E3; --logo-sym-b:#2FBFC8;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 34px -22px rgba(0,0,0,.6);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#07111F; --surface:#0D1B2F; --ink:#E8EEF7; --ink-2:#A9B8CD; --ink-3:#8294AE; --rule:#1D2E47; --track:#16263D;
-  --neural:#8DB6F5; --neural-soft:#12294B; --symbolic-ink:#FFB84D; --symbolic-soft:#2D2008; --symbolic-display:#FFB02E;
-  --mark-prog:#D37812; --mark-net:#5B92E7;
-  --logo-navy-a:#8DB6F5; --logo-navy-b:#5A8AD6; --logo-navy:#7FA8E8;
+  --paper:#0A1322; --surface:#101C30; --card:#16253D;
+  --ink:#E8EEF8; --ink-2:#A9B8CE; --ink-3:#8E9DB6;
+  --rule:#1F3150; --rule-2:#2B4166; --lines:rgba(255,255,255,.03);
+  --neural-ink:#9DB4FF; --neural-soft:#17254A; --sym-ink:#5FD6DB; --sym-soft:#0F3138;
+  --c-ours:#19A9B0; --c-net:#3E5FE1; --mute:#6B7C98; --track:#12363C;
+  --logo-navy-a:#9DB4FF; --logo-navy-b:#6E8FF0; --logo-navy:#8AA5F5; --logo-sym-a:#5FE0E3; --logo-sym-b:#2FBFC8;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 34px -22px rgba(0,0,0,.6);
   color-scheme:dark;
 }
 
 *,*::before,*::after{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--paper);background-image:linear-gradient(to bottom,transparent 27px,var(--lines) 28px);background-size:100% 28px;
+  color:var(--ink);font:400 16px/1.7 var(--body);-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--mark-net);outline-offset:3px}
-.wrap{width:100%;max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+p{margin:0}
+:focus-visible{outline:2px solid var(--c-net);outline-offset:3px;border-radius:2px}
+.wrap{width:100%;max-width:1120px;margin-inline:auto;
+  padding-left:max(clamp(16px,4vw,32px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,32px),env(safe-area-inset-right,0px))}
 .vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 :root:not([data-lang="zh"]) [lang="zh-CN"]{display:none!important}
 :root[data-lang="zh"] [lang="en"]{display:none!important}
+.k{font:500 11px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0}
+.tn{text-transform:none;letter-spacing:.04em}
 
 /* top bar */
-.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
-.word{font:500 .875rem/1 var(--mono);letter-spacing:.04em}
-.lang{display:inline-flex;gap:2px;padding:2px;border:1px solid var(--rule);border-radius:999px;background:var(--surface)}
-.lang button{font:500 .8125rem/1 var(--body);padding:7px 13px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);cursor:pointer}
-.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-
-/* hero: the logo is as tall as the title and the lede together, and sits next to them */
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center;padding-block:clamp(8px,3vw,44px) clamp(40px,6vw,80px)}
-.logo{display:block;width:clamp(140px,42vw,190px);height:auto}
-.title{font:500 clamp(1.95rem,6.2vw,2.5rem)/1.1 var(--disp);letter-spacing:-.012em;margin:0;text-wrap:balance}
-.nb{white-space:nowrap}
-.t-n{color:var(--neural)} .t-s{color:var(--symbolic-display)}
-.title-zh{font:500 1.2rem/1.4 var(--disp);color:var(--ink-2);margin:12px 0 0}
-.lede{font-size:1.125rem;line-height:1.55;color:var(--ink-2);max-width:46ch;margin:20px 0 0}
-@media(min-width:720px){
-  .hero .wrap{grid-template-columns:clamp(160px,25vw,320px) minmax(0,1fr);gap:clamp(32px,5vw,72px)}
-  .logo{width:100%}
-  .title{font-size:clamp(2.2rem,4.1vw,3.4rem);max-width:23ch}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+@supports (background:color-mix(in srgb,red 50%,blue)){
+  .nav{background:color-mix(in srgb,var(--paper) 86%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px)}
 }
+.nav-in{display:flex;align-items:center;gap:20px;min-height:56px}
+.brand{display:inline-flex;align-items:center;gap:10px;font:600 15px/1 var(--body);letter-spacing:.01em;text-decoration:none}
+.mini{width:24px;height:24px;flex:none}
+.links{display:none;margin-left:auto;gap:2px}
+.links a{display:block;padding:8px 12px;font:500 14px/1 var(--body);color:var(--ink-2);text-decoration:none;border-bottom:2px solid transparent}
+.links a:hover{color:var(--ink)}
+.links a[aria-current="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.tools{margin-left:auto;display:flex;align-items:center;gap:8px}
+@media(min-width:780px){.links{display:flex}.tools{margin-left:12px}}
+.tbtn{display:inline-flex;align-items:center;justify-content:center;height:30px;min-width:30px;padding:0 11px;border:1px solid var(--rule-2);border-radius:999px;
+  background:transparent;color:var(--ink);font:500 13px/1 var(--body);cursor:pointer}
+.tbtn:hover{background:var(--card)}
+.tbtn.icon{padding:0;width:30px}
+.tbtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* the slab: the two claims */
-.slab{background:var(--slab-bg);color:var(--slab-ink);border-block:1px solid var(--slab-rule)}
-.slab .wrap{padding-block:clamp(8px,2vw,24px)}
-.pillars{display:grid;grid-template-columns:minmax(0,1fr)}
-.pillar{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;padding-block:clamp(36px,6vw,64px)}
-.pillar+.pillar{border-top:1px solid var(--slab-rule)}
-@media(min-width:980px){.pillar{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(40px,5vw,72px);align-items:start}}
-.num{font:italic 400 2.25rem/1 var(--disp);color:var(--slab-ink-3);margin:0 0 12px}
-.claim{font:500 clamp(2rem,3.7vw,3.1rem)/1.06 var(--disp);letter-spacing:-.01em;margin:0 0 18px;text-wrap:balance}
-.claim .a{color:var(--slab-amber)} .claim .b{color:var(--slab-blue)}
-.para{color:var(--slab-ink-2);max-width:56ch;margin:0 0 12px}
-.goal{color:var(--slab-ink);font-weight:500;max-width:56ch;margin:0}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px clamp(14px,3vw,36px);margin:28px 0 0;padding:0;list-style:none;max-width:460px}
-.stats b{display:block;font:500 clamp(1.5rem,6vw,2.3rem)/1 var(--disp);color:var(--slab-ink)}
-.stats span{display:block;margin-top:7px;font-size:.8125rem;line-height:1.35;color:var(--slab-ink-3)}
-.proof{margin:0;min-width:0;background:var(--slab-card);border:1px solid var(--slab-rule);border-radius:10px;padding:16px 16px 14px}
-.proof .cap{color:var(--slab-ink-2);font-size:.875rem;line-height:1.5;margin:12px 0 0}
+/* hero */
+.hero{padding:clamp(40px,7vw,88px) 0 clamp(36px,6vw,60px);border-bottom:1px solid var(--rule)}
+.pill{display:inline-block;margin:0 0 clamp(22px,3.4vw,38px);padding:6px 13px;border:1px solid var(--rule-2);border-radius:999px;color:var(--ink-2);font:500 12px/1 var(--body);letter-spacing:.03em}
+.lockup{display:flex;align-items:center;gap:clamp(16px,3vw,34px)}
+.mark{flex:none;width:clamp(64px,12.5vw,148px)}
+.logo{display:block;width:100%;height:auto;overflow:visible}
+.wordmark{margin:0;font:500 clamp(46px,10.4vw,122px)/1 var(--disp);letter-spacing:-.022em;color:var(--neural-ink);transform:translateY(.03em)}
+.expand{margin:clamp(18px,2.6vw,28px) 0 0;font:500 12px/1.5 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--ink)}
+@media(max-width:519px){.expand{letter-spacing:.12em;font-size:11px}}
+.title{margin:0;max-width:30ch;font:400 clamp(25px,3.2vw,38px)/1.22 var(--disp);letter-spacing:-.008em;text-wrap:balance}
+.nb{white-space:nowrap}
+.t-n{color:var(--neural-ink)} .t-s{color:var(--sym-ink)}
+.title-zh{margin:10px 0 0;font:500 clamp(17px,2vw,21px)/1.5 var(--disp);color:var(--ink-2)}
+.lede{margin:18px 0 0;max-width:62ch;color:var(--ink-2);font-size:18px;line-height:1.6}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(30px,4.4vw,44px);margin-top:clamp(24px,3.2vw,36px)}
+@media(min-width:980px){.hero-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(40px,6vw,88px);align-items:start}}
+.thesis{margin:0;padding:4px 0 4px clamp(18px,2.4vw,26px);font:400 clamp(24px,2.7vw,32px)/1.3 var(--disp);letter-spacing:-.008em;
+  border-left:3px solid var(--rule-2);border-image:linear-gradient(to bottom,var(--c-ours),var(--c-net)) 1}
+.thesis .ln{display:block}
+.thesis .ln+.ln{margin-top:.2em}
+.thesis .a{color:var(--sym-ink)} .thesis .b{color:var(--neural-ink);white-space:nowrap}
+.gloss{margin:clamp(34px,5vw,54px) 0 0;border-top:1px solid var(--rule)}
+.gloss>div{display:grid;grid-template-columns:minmax(0,1fr);gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.gloss dt{font:500 11px/1.7 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding-top:2px}
+.gloss dd{margin:0;color:var(--ink-2);font-size:15px;line-height:1.6;max-width:78ch}
+.gn{color:var(--neural-ink)} .gs{color:var(--sym-ink)} .gr{color:var(--ink-2)}
+@media(min-width:720px){.gloss>div{grid-template-columns:150px minmax(0,1fr)}}
+
+/* contents */
+.toc{padding:22px 0;border-bottom:1px solid var(--rule)}
+.toc-in{display:grid;grid-template-columns:minmax(0,1fr);gap:12px 24px}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px;counter-reset:s}
+.toc li{counter-increment:s;font-size:14.5px;line-height:1.4}
+.toc li::before{content:counter(s,decimal-leading-zero);margin-right:9px;font:500 11px var(--mono);color:var(--ink-3)}
+.toc a{text-decoration:none}
+.toc a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--c-ours)}
+@media(min-width:720px){.toc-in{grid-template-columns:150px minmax(0,1fr)}}
+@media(min-width:1000px){.toc ol{grid-template-columns:repeat(4,max-content);justify-content:space-between}}
+
+/* sections */
+main section{padding:clamp(52px,8vw,92px) 0;border-bottom:1px solid var(--rule)}
+.shead{display:flex;align-items:baseline;gap:16px;margin:0 0 10px}
+.num{flex:none;font:500 12px/1 var(--mono);letter-spacing:.14em;color:var(--ink-3)}
+h2{margin:0;font:500 clamp(28px,3.6vw,40px)/1.15 var(--disp);letter-spacing:-.012em;text-wrap:balance}
+.sub{margin:0 0 clamp(28px,4vw,46px);max-width:62ch;color:var(--ink-2)}
+
+/* the two claims */
+.claim-row{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,40px);padding:clamp(34px,5vw,56px) 0;border-top:1px solid var(--rule)}
+.claim-row:first-of-type{border-top:0;padding-top:0}
+.claim-row:last-of-type{padding-bottom:0}
+@media(min-width:980px){.claim-row{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(40px,5vw,72px);align-items:start}}
+.claim-row .k{margin-bottom:14px}
+.claim{margin:0 0 18px;font:500 clamp(32px,4vw,46px)/1.06 var(--disp);letter-spacing:-.014em;text-wrap:balance}
+.claim .a{color:var(--sym-ink)} .claim .b{color:var(--neural-ink)}
+.para{max-width:56ch;margin:0 0 12px;color:var(--ink-2)}
+.goal{max-width:56ch;margin:18px 0 0;font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px clamp(14px,3vw,32px);max-width:500px;margin:30px 0 0;padding:20px 0 0;border-top:1px solid var(--rule);list-style:none}
+.stats b{display:block;font:600 clamp(26px,3.2vw,34px)/1 var(--body);letter-spacing:-.02em}
+.stats span{display:block;margin-top:8px;font-size:13px;line-height:1.4;color:var(--ink-3)}
+.proof{margin:0;min-width:0;background:var(--surface);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow);overflow:hidden}
+.pbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:11px 18px;border-bottom:1px solid var(--rule)}
+.pbody{padding:16px 18px 18px}
+.cap{margin:14px 0 0;color:var(--ink-2);font-size:14px;line-height:1.6}
 .codewrap{overflow-x:auto}
-.code{margin:0;font:400 clamp(.75rem,3.2vw,.8125rem)/1.7 var(--mono);color:var(--slab-ink);white-space:pre}
-.code .cm{color:var(--slab-ink-3)} .code .am{color:var(--slab-amber);font-weight:500}
+.code{margin:0;font:400 clamp(12px,3.2vw,13.5px)/1.7 var(--mono);color:var(--ink);white-space:pre}
+.code .cm{color:var(--ink-3)} .code .am{color:var(--sym-ink);font-weight:600}
 
 .chartbox{position:relative}
-.chart{display:block;width:100%;max-width:560px;height:auto;touch-action:pan-y}
-.chart .grid{stroke:var(--slab-rule);stroke-width:1}
-.chart text{font:400 13px var(--body);fill:var(--slab-ink-3)}
-.chart text.lab{fill:var(--slab-ink)}
-.chart .best{fill:none;stroke:var(--s-prog);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-.chart .ref{stroke:var(--s-net);stroke-width:1.5;stroke-dasharray:5 4}
-.chart .pt{stroke:var(--slab-card);stroke-width:2}
-.chart .pt.kept{fill:var(--s-prog)} .chart .pt.not{fill:var(--s-mute)}
-.chart .cross{stroke:var(--slab-ink-3);stroke-width:1}
-.chart .hl{fill:none;stroke:var(--slab-ink);stroke-width:1.5}
-.legend{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;margin:10px 0 0;padding:0;font-size:.8125rem;color:var(--slab-ink-2)}
+.chart{display:block;width:100%;max-width:640px;height:auto;touch-action:pan-y}
+.chart .grid{stroke:var(--rule);stroke-width:1}
+.chart text{font:400 12.5px var(--body);fill:var(--ink-3)}
+.chart text.lab{fill:var(--ink)}
+.chart .best{fill:none;stroke:var(--c-ours);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .ref{stroke:var(--c-net);stroke-width:1.5;stroke-dasharray:5 4}
+.chart .pt{stroke:var(--surface);stroke-width:2}
+.chart .pt.kept{fill:var(--c-ours)} .chart .pt.not{fill:var(--mute)}
+.chart .cross{stroke:var(--ink-3);stroke-width:1}
+.chart .hl{fill:none;stroke:var(--ink);stroke-width:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;margin:14px 0 0;padding:0;font-size:13px;color:var(--ink-2)}
 .legend li{display:inline-flex;align-items:center;gap:8px}
-.k-line{width:18px;border-top:2px solid var(--s-prog)}
-.k-dash{width:18px;border-top:2px dashed var(--s-net)}
+.k-line{width:18px;border-top:2px solid var(--c-ours)}
+.k-dash{width:18px;border-top:2px dashed var(--c-net)}
 .k-dot{width:10px;height:10px;border-radius:50%}
-.k-dot.kept{background:var(--s-prog)} .k-dot.not{background:var(--s-mute)}
-.tip{position:absolute;z-index:3;max-width:260px;pointer-events:none;background:var(--slab-bg);border:1px solid var(--slab-rule);border-radius:8px;padding:9px 11px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.tip .tv{font:600 1.25rem/1.1 var(--body);color:var(--slab-ink);font-variant-numeric:tabular-nums}
-.tip .ts{font-size:.8125rem;color:var(--slab-ink-2);margin-top:3px}
-.tip .td{font-size:.8125rem;color:var(--slab-ink-2);margin-top:6px;line-height:1.4}
-.tbl{margin-top:12px;font-size:.8125rem;color:var(--slab-ink-2)}
-.tbl summary{cursor:pointer;color:var(--slab-ink);padding:4px 0}
+.k-dot.kept{background:var(--c-ours)} .k-dot.not{background:var(--mute)}
+.tip{position:absolute;z-index:3;max-width:260px;pointer-events:none;background:var(--surface);border:1px solid var(--rule-2);border-radius:6px;padding:9px 11px;box-shadow:0 10px 28px -10px rgba(14,26,43,.4)}
+.tip .tv{font:600 1.25rem/1.1 var(--body);color:var(--ink);font-variant-numeric:tabular-nums}
+.tip .ts{font-size:.8125rem;color:var(--ink-2);margin-top:3px}
+.tip .td{font-size:.8125rem;color:var(--ink-2);margin-top:6px;line-height:1.4}
+.tbl{margin-top:14px;font-size:13px;color:var(--ink-2)}
+.tbl summary{cursor:pointer;color:var(--ink);padding:4px 0}
 .tbl-scroll{overflow:auto;max-height:340px;margin-top:8px}
 .tbl table{border-collapse:collapse;width:100%;min-width:520px}
-.tbl th,.tbl td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--slab-rule);vertical-align:top}
-.tbl th{color:var(--slab-ink);font-weight:500}
+.tbl th,.tbl td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+.tbl th{color:var(--ink);font-weight:500}
 .tbl td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 
-/* sections on the page ground */
-.loop .wrap,.standing .wrap,.map .wrap{padding-block:clamp(44px,7vw,84px)}
-.standing .wrap,.map .wrap{border-top:1px solid var(--rule)}
-h2{font:500 clamp(1.5rem,2.6vw,2rem)/1.15 var(--disp);letter-spacing:-.005em;margin:0 0 6px}
-.sub{color:var(--ink-2);margin:0 0 28px;max-width:62ch}
-
+/* the loop */
 .loopfig{--gap:92px;margin:0}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr)}
-.step{min-width:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px}
-.chip{display:inline-block;font:500 .6875rem/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;padding:5px 7px;border-radius:4px;margin-bottom:10px;align-self:flex-start}
-.chip.n{background:var(--neural-soft);color:var(--neural)}
-.chip.s{background:var(--symbolic-soft);color:var(--symbolic-ink)}
-.chip.d{background:var(--track);color:var(--ink-2)}
-.step h3{font:600 1.0625rem/1.3 var(--body);margin:0 0 6px}
-.step p{margin:0;color:var(--ink-2);font-size:.9375rem;line-height:1.5}
+.step{min-width:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:18px;box-shadow:var(--shadow)}
+.chip{display:inline-block;align-self:flex-start;margin-bottom:12px;padding:5px 8px;border-radius:3px;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.chip.n{background:var(--neural-soft);color:var(--neural-ink)}
+.chip.s{background:var(--sym-soft);color:var(--sym-ink)}
+.chip.d{background:var(--card);color:var(--ink-2)}
+.step h3{margin:0 0 6px;font:600 17px/1.3 var(--body)}
+.step p{color:var(--ink-2);font-size:15px;line-height:1.55}
 .step p:not(.ex){margin-bottom:12px}
-.step .ex{margin-top:auto;padding-top:14px;font-size:.8125rem;line-height:1.45;color:var(--ink-3)}
-.inner{margin-top:auto;border:1px dashed var(--ink-3);border-radius:8px;padding:9px 11px;font-size:.875rem;line-height:1.45;color:var(--ink-2)}
+.step .ex{margin-top:auto;padding-top:14px;font-size:13px;line-height:1.5;color:var(--ink-3)}
+.inner{margin-top:auto;border:1px dashed var(--ink-3);border-radius:4px;padding:10px 12px;font-size:14px;line-height:1.5;color:var(--ink-2)}
 .arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;color:var(--ink-3)}
-.alabel{font:400 .75rem/1 var(--mono);letter-spacing:.04em;margin-bottom:6px}
+.alabel{margin-bottom:6px;font:400 12px/1 var(--mono);letter-spacing:.04em}
 .aline{position:relative;display:block;width:2px;height:26px;background:currentColor}
 .aline::after{content:"";position:absolute;left:-4px;bottom:-1px;border-top:8px solid currentColor;border-left:5px solid transparent;border-right:5px solid transparent}
 @media(min-width:900px){
@@ -154,117 +209,191 @@ h2{font:500 clamp(1.5rem,2.6vw,2rem)/1.15 var(--disp);letter-spacing:-.005em;mar
 }
 .rail{display:none}
 @media(min-width:900px){
-  .rail{display:block;position:relative;height:54px;margin:0 calc((100% - 3 * var(--gap)) / 8) 30px;border:2px solid var(--ink-3);border-top:0;border-radius:0 0 14px 14px}
+  .rail{display:block;position:relative;height:54px;margin:0 calc((100% - 3 * var(--gap)) / 8) 30px;border:2px solid var(--ink-3);border-top:0;border-radius:0 0 12px 12px}
   .rail::before{content:"";position:absolute;left:-6px;top:-2px;border-bottom:9px solid var(--ink-3);border-left:5px solid transparent;border-right:5px solid transparent}
-  .rail .rlabel{position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);background:var(--bg);padding:0 14px;white-space:nowrap;font-size:.875rem;color:var(--ink-2)}
+  .rail .rlabel{position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);background:var(--paper);padding:0 14px;white-space:nowrap;font-size:14px;color:var(--ink-2)}
   .return{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0)}
 }
-.return{margin-top:14px;display:flex;gap:12px;align-items:flex-start;border:1px solid var(--rule);border-radius:10px;padding:12px 14px;background:var(--surface);color:var(--ink-2);font-size:.9375rem}
+.return{margin-top:14px;display:flex;gap:12px;align-items:flex-start;border:1px solid var(--rule);border-radius:6px;padding:12px 14px;background:var(--surface);color:var(--ink-2);font-size:15px}
 .return .glyph{font:500 1.25rem/1 var(--mono);color:var(--ink-3)}
-.recur{margin:14px 0 0;color:var(--ink-2);font-size:.9375rem}
-.recur code{font:500 .875rem var(--mono);background:var(--track);color:var(--ink);padding:2px 6px;border-radius:4px}
+.recur{margin:16px 0 0;color:var(--ink-2);font-size:15px}
+.recur code{font:500 14px var(--mono);background:var(--card);color:var(--ink);padding:2px 7px;border-radius:3px}
 
-.board{border-top:1px solid var(--rule)}
-.hrow,.brow{display:grid;grid-template-columns:minmax(150px,1.3fr) repeat(3,minmax(0,1fr)) minmax(190px,1.3fr);gap:0 18px;align-items:center;border-bottom:1px solid var(--rule)}
-.hrow{padding:10px 0;font:500 .75rem/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
-.brow{padding:16px 0}
+/* where it stands */
+.board{border-top:1px solid var(--rule-2)}
+.hrow,.brow{display:grid;grid-template-columns:minmax(150px,1.25fr) repeat(3,minmax(0,1fr)) minmax(190px,1.3fr);gap:0 20px;align-items:start;border-bottom:1px solid var(--rule)}
+.hrow{padding:12px 0;font:500 11px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.brow{padding:20px 0}
+.task{padding-top:5px}
+.gap{padding-top:11px}
 .task b{display:block;font-weight:600}
-.task span{color:var(--ink-3);font-size:.8125rem}
-.val>b{display:block;font:500 1.5rem/1.1 var(--body);font-variant-numeric:tabular-nums}
-.val>span{display:block;color:var(--ink-3);font-size:.8125rem;line-height:1.3;margin-top:2px;overflow-wrap:anywhere}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:var(--ink-3)}
-.dot.o{background:var(--mark-prog)} .dot.n{background:var(--mark-net)}
-.val .k{display:none}
-.meter{position:relative;height:10px;background:var(--track);border-radius:4px;overflow:hidden}
-.fill{position:absolute;left:0;top:0;bottom:0;background:var(--mark-prog);border-radius:0 4px 4px 0}
-.pct{display:block;margin-top:6px;font-size:.875rem;color:var(--ink-2)}
-.fine{color:var(--ink-3);font-size:.875rem;line-height:1.55;max-width:80ch;margin:18px 0 0}
+.task span{color:var(--ink-3);font-size:13px}
+.val>b{display:block;font:600 26px/1.1 var(--body);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.val>span{display:block;margin-top:3px;color:var(--ink-3);font-size:13px;line-height:1.3;overflow-wrap:anywhere}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:var(--mute)}
+.dot.o{background:var(--c-ours)} .dot.n{background:var(--c-net)}
+.val .k2{display:none}
+.meter{position:relative;height:8px;background:var(--track);border-radius:4px;overflow:hidden}
+.fill{position:absolute;left:0;top:0;bottom:0;background:var(--c-ours);border-radius:0 4px 4px 0}
+.pct{display:block;margin-top:7px;font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.fine{max-width:80ch;margin:22px 0 0;color:var(--ink-3);font-size:14px;line-height:1.6}
 @media(max-width:759px){
   .hrow{display:none}
   .brow{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
   .brow .task,.brow .gap{grid-column:1/-1}
-  .val .k{display:block;margin:0 0 3px;font:500 .6875rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
-  .val>b{font-size:1.25rem}
+  .val .k2{display:block;min-height:2.6em;margin:0 0 3px;font:500 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+  .val>b{font-size:21px}
 }
 
-.cols{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
-@media(min-width:760px){.cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}}
-.col h3{font:500 .75rem/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
-.col ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+/* tasks */
+.cols{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+@media(min-width:760px){.cols{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.col{background:var(--surface);padding:22px 22px 26px}
+.col h3{margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid var(--rule);font:500 11px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.col ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
 .col li b{font-weight:600}
-.col li span{display:block;color:var(--ink-2);font-size:.9375rem;line-height:1.45}
+.col li span{display:block;margin-top:2px;color:var(--ink-2);font-size:15px;line-height:1.5}
 
-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:28px 44px;border-top:1px solid var(--rule);color:var(--ink-3);font-size:.875rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:28px 52px;color:var(--ink-3);font-size:13.5px}
 footer a{color:var(--ink-2)}
+
+/* Chinese: the mono-label styles are tracked for Latin capitals, so loosen them for CJK glyphs */
+:root[data-lang="zh"] .k,:root[data-lang="zh"] .gloss dt,:root[data-lang="zh"] .num,:root[data-lang="zh"] .chip,:root[data-lang="zh"] .hrow,
+:root[data-lang="zh"] .col h3,:root[data-lang="zh"] .val .k2,:root[data-lang="zh"] .expand{letter-spacing:.08em;font-size:12.5px}
+:root[data-lang="zh"] .thesis{font-size:clamp(22px,2.3vw,28px)}
+
+/* the mark pulses from the neural side to the symbolic side; at rest it is complete */
+@media (prefers-reduced-motion:no-preference){
+  .logo .m-n circle,.logo .m-s rect,.logo .m-spark{transform-box:fill-box;transform-origin:center;animation:beat 5.4s ease-in-out infinite}
+  .logo .m-n circle:nth-child(2){animation-delay:.14s} .logo .m-n circle:nth-child(3){animation-delay:.28s}
+  .logo .m-n circle:nth-child(4){animation-delay:.42s} .logo .m-n circle:nth-child(5){animation-delay:.56s}
+  .logo .m-spark{animation-name:spark;animation-delay:1.05s}
+  .logo .m-s rect:nth-child(1){animation-delay:1.5s} .logo .m-s rect:nth-child(2){animation-delay:1.64s} .logo .m-s rect:nth-child(3){animation-delay:1.78s}
+}
+@keyframes beat{0%,60%,100%{transform:scale(1)}70%{transform:scale(1.17)}80%{transform:scale(1)}}
+@keyframes spark{0%,50%,100%{transform:scale(1) rotate(0)}62%{transform:scale(1.3) rotate(18deg)}76%{transform:scale(1) rotate(0)}}
 </style>
 </head>
 <body>
-<header class="bar">
-  <div class="wrap">
-    <span class="word">RSI-Science</span>
-    <div class="lang" role="group" aria-label="Language / 语言">
-      <button id="b-en" type="button" aria-pressed="true">EN</button>
-      <button id="b-zh" type="button" aria-pressed="false">中文</button>
+<header class="nav" id="top">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="RSI-Science">
+      <svg class="mini" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="14" r="11" fill="none" stroke="var(--logo-navy)" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="52 17.1" transform="rotate(-62 14 14)"/>
+        <circle cx="14" cy="14" r="11" fill="none" stroke="var(--logo-sym-b)" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="11 58.1" transform="rotate(215 14 14)"/>
+        <path d="M14 8.2l1.7 4.1 4.1 1.7-4.1 1.7-1.7 4.1-1.7-4.1-4.1-1.7 4.1-1.7z" fill="var(--logo-sym-b)"/>
+      </svg>
+      <span>RSI-Science</span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#ideas"><span lang="en">Ideas</span><span lang="zh-CN">想法</span></a>
+      <a href="#loop"><span lang="en">Loop</span><span lang="zh-CN">循环</span></a>
+      <a href="#results"><span lang="en">Results</span><span lang="zh-CN">进展</span></a>
+      <a href="#tasks"><span lang="en">Tasks</span><span lang="zh-CN">任务</span></a>
+    </nav>
+    <div class="tools">
+      <button id="b-lang" class="tbtn" type="button" aria-label="Switch language / 切换语言"><span lang="en">中文</span><span lang="zh-CN">EN</span></button>
+      <button id="b-theme" class="tbtn icon" type="button" aria-label="Switch theme / 切换主题">
+        <svg id="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+        <svg id="i-sun" viewBox="0 0 24 24" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
     </div>
   </div>
 </header>
 
 <main>
 
-<section class="hero">
+<section class="hero" aria-labelledby="name">
   <div class="wrap">
-    <div class="hero-art">
+    <p class="pill"><span lang="en">Programme note · 2026.11</span><span lang="zh-CN">项目说明 · 2026.11</span></p>
+    <div class="lockup">
+      <div class="mark">
       <svg class="logo" viewBox="105 78 855 855" fill="none" role="img" aria-label="RSI-Science logo">
-        <defs><linearGradient id="lg-navy" x1="180" y1="200" x2="790" y2="900" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-navy-a)"/><stop offset="1" style="stop-color:var(--logo-navy-b)"/></linearGradient><linearGradient id="lg-amber" x1="610" y1="100" x2="890" y2="800" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-amber-a)"/><stop offset="1" style="stop-color:var(--logo-amber-b)"/></linearGradient></defs>
+        <defs><linearGradient id="lg-navy" x1="180" y1="200" x2="790" y2="900" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-navy-a)"/><stop offset="1" style="stop-color:var(--logo-navy-b)"/></linearGradient><linearGradient id="lg-sym" x1="610" y1="100" x2="890" y2="800" gradientUnits="userSpaceOnUse"><stop style="stop-color:var(--logo-sym-a)"/><stop offset="1" style="stop-color:var(--logo-sym-b)"/></linearGradient></defs>
         <g id="recursive-loop">
-          <path d="M 737 836 A 386 386 0 0 0 666 138" stroke="url(#lg-amber)" stroke-width="50" stroke-linecap="round"/>
-          <path d="M 566 89 Q 558 81 563 97 L 605 219 Q 611 236 620 221 L 646 180 L 704 151 Q 724 142 703 134 Z" fill="url(#lg-amber)"/>
+          <path d="M 737 836 A 386 386 0 0 0 666 138" stroke="url(#lg-sym)" stroke-width="50" stroke-linecap="round"/>
+          <path d="M 566 89 Q 558 81 563 97 L 605 219 Q 611 236 620 221 L 646 180 L 704 151 Q 724 142 703 134 Z" fill="url(#lg-sym)"/>
           <path d="M 535 128 A 386 386 0 1 0 737 836" stroke="url(#lg-navy)" stroke-width="50" stroke-linecap="round"/>
         </g>
         <g id="neural-network" style="stroke:var(--logo-navy)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
           <path d="M 226 458 L 355 346 L 365 533 L 226 458 L 239 625 L 365 533 L 355 718 L 239 625"/>
           <path d="M 355 346 C 465 355 437 481 518 478 M 365 533 H 487 M 355 718 C 449 701 443 579 518 575"/>
         </g>
-        <g id="neural-nodes" fill="url(#lg-navy)">
+        <g id="neural-nodes" class="m-n" fill="url(#lg-navy)">
           <circle cx="226" cy="458" r="46"/><circle cx="355" cy="346" r="48"/><circle cx="365" cy="533" r="47"/><circle cx="239" cy="625" r="46"/><circle cx="355" cy="718" r="48"/>
         </g>
-        <g id="symbolic-reasoning" stroke="url(#lg-amber)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
+        <g id="symbolic-reasoning" stroke="url(#lg-sym)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round">
           <path d="M 589 478 H 615 Q 666 478 666 427 V 411 Q 666 370 708 370 H 731 M 624 533 H 786 M 589 575 H 615 Q 666 575 666 624 V 650 Q 666 675 708 675 H 740"/>
         </g>
-        <g id="symbolic-nodes" fill="url(#lg-amber)"><rect x="697" y="328" width="82" height="84" rx="14"/><rect x="761" y="490" width="82" height="84" rx="14"/><rect x="710" y="634" width="82" height="84" rx="14"/></g>
-        <path id="discovery-spark" d="M 553 455 C 568 513 572 516 622 531 C 572 546 568 550 553 607 C 538 550 534 546 484 531 C 534 516 538 513 553 455 Z" fill="url(#lg-amber)"/>
+        <g id="symbolic-nodes" class="m-s" fill="url(#lg-sym)"><rect x="697" y="328" width="82" height="84" rx="14"/><rect x="761" y="490" width="82" height="84" rx="14"/><rect x="710" y="634" width="82" height="84" rx="14"/></g>
+        <path id="discovery-spark" class="m-spark" d="M 553 455 C 568 513 572 516 622 531 C 572 546 568 550 553 607 C 538 550 534 546 484 531 C 534 516 538 513 553 455 Z" fill="url(#lg-sym)"/>
       </svg>
+      </div>
+      <h1 class="wordmark" id="name">RSI-Science</h1>
     </div>
-    <div class="hero-text">
-      <h1 class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive <span class="nb">Self-Improvement</span> for Interpretable Science Discovery</h1>
-      <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
-      <p class="lede" lang="en">The LLM is the neural part and writes code. The code is the symbolic part and is the scientific model.</p>
-      <p class="lede" lang="zh-CN">LLM 是 neural 部分，负责写代码；代码是 symbolic 部分，就是最终的科学模型。</p>
+    <p class="expand"><span lang="en">Recursive · Self-improvement · Science</span><span lang="zh-CN">递归 · 自我改进 · 科学</span></p>
+    <div class="hero-grid">
+      <div>
+        <p class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive <span class="nb">Self-Improvement</span> for Interpretable Science Discovery</p>
+        <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
+        <p class="lede" lang="en">The LLM is the neural part and writes code. The code is the symbolic part and is the scientific model.</p>
+        <p class="lede" lang="zh-CN">LLM 是 neural 部分，负责写代码；代码是 symbolic 部分，就是最终的科学模型。</p>
+      </div>
+      <div>
+        <p class="thesis" lang="en"><span class="ln"><span class="a">Code</span> is enough.</span><span class="ln"><span class="b">Self-improvement</span> maxes out the code.</span></p>
+        <p class="thesis" lang="zh-CN"><span class="ln"><span class="a">代码</span>就够了。</span><span class="ln"><span class="b">自我改进</span>把代码榨到极致。</span></p>
+      </div>
     </div>
+    <dl class="gloss">
+      <div><dt class="gn"><span lang="en">Neural</span><span lang="zh-CN">神经</span></dt>
+        <dd lang="en">The LLM. It reads the program, the notes and the evidence, and writes the next version.</dd>
+        <dd lang="zh-CN">LLM。读程序、笔记和证据，写出下一个版本。</dd></div>
+      <div><dt class="gs"><span lang="en">Symbolic</span><span lang="zh-CN">符号</span></dt>
+        <dd lang="en">The code. Rules, equations and algorithms that can be read, checked, tested and edited, with describe() stating every term. This is the scientific model.</dd>
+        <dd lang="zh-CN">代码。规则、方程和算法，可以读、查、测试和修改，describe() 写明每一项。这就是科学模型。</dd></div>
+      <div><dt class="gr"><span lang="en">Recursive</span><span lang="zh-CN">递归</span></dt>
+        <dd lang="en">Every accepted version is the base of the next, and a new run can start from the best program of an earlier one.</dd>
+        <dd lang="zh-CN">每个被接受的版本都是下一版的起点，新的 run 也可以从更早 run 的最好程序开始。</dd></div>
+    </dl>
   </div>
 </section>
 
-<section class="slab" aria-labelledby="thesis-h">
-  <div class="wrap">
-    <h2 id="thesis-h" class="vh"><span lang="en">Two ideas</span><span lang="zh-CN">两个想法</span></h2>
-    <div class="pillars">
+<nav class="toc" aria-label="Contents">
+  <div class="wrap toc-in">
+    <h2 class="k"><span lang="en">Contents</span><span lang="zh-CN">目录</span></h2>
+    <ol>
+      <li><a href="#ideas"><span lang="en">Two ideas</span><span lang="zh-CN">两个想法</span></a></li>
+      <li><a href="#loop"><span lang="en">The loop</span><span lang="zh-CN">循环</span></a></li>
+      <li><a href="#results"><span lang="en">Where it stands</span><span lang="zh-CN">目前的进展</span></a></li>
+      <li><a href="#tasks"><span lang="en">Three directions, seven tasks</span><span lang="zh-CN">三个方向，七个任务</span></a></li>
+    </ol>
+  </div>
+</nav>
 
-      <article class="pillar">
-        <div class="ptext">
-          <p class="num">i</p>
-          <h3 class="claim" lang="en"><span class="a">Code</span> is enough.</h3>
-          <h3 class="claim" lang="zh-CN"><span class="a">代码</span>就够了。</h3>
-          <p class="para" lang="en">A scientific model can be a program: rules, equations and algorithms in numpy and scipy, with no neural network inside. Code is symbolic. You can read it, check it, test it and edit it, and its describe() states every term and what it means.</p>
-          <p class="para" lang="zh-CN">科学模型可以就是一个程序：规则、方程、算法，只用 numpy 和 scipy，里面没有神经网络。代码是符号化的，可以读、可以查、可以测试、可以改，describe() 会写明每一项及其含义。</p>
-          <p class="goal" lang="en">The goal is to match SOTA networks such as AlphaFold, ESM and MatterGen on their own benchmarks, on the same held-out cases.</p>
-          <p class="goal" lang="zh-CN">目标是在 AlphaFold、ESM、MatterGen 这类 SOTA 网络自己的 benchmark 上，在同样的留出 case 上与它们持平。</p>
-          <ul class="stats">
-            <li><b>176</b><span lang="en">lines in the best program</span><span lang="zh-CN">最好程序的行数</span></li>
-            <li><b>79</b><span lang="en">features in the model</span><span lang="zh-CN">模型里的特征数</span></li>
-            <li><b>0</b><span lang="en">neural networks inside</span><span lang="zh-CN">里面的神经网络</span></li>
-          </ul>
-        </div>
-        <figure class="proof">
+<section id="ideas" aria-labelledby="ideas-h">
+  <div class="wrap">
+    <div class="shead"><span class="num">01</span><h2 id="ideas-h"><span lang="en">Two ideas</span><span lang="zh-CN">两个想法</span></h2></div>
+    <p class="sub" lang="en">Two claims carry the project. Each comes with evidence from a real run.</p>
+    <p class="sub" lang="zh-CN">项目建立在两个主张上，每个都附有真实 run 的证据。</p>
+
+    <article class="claim-row">
+      <div class="ctext">
+        <p class="k"><span lang="en">Idea I · symbolic</span><span lang="zh-CN">想法一 · 符号</span></p>
+        <h3 class="claim" lang="en"><span class="a">Code</span> is enough.</h3>
+        <h3 class="claim" lang="zh-CN"><span class="a">代码</span>就够了。</h3>
+        <p class="para" lang="en">A scientific model can be a program: rules, equations and algorithms in numpy and scipy, with no neural network inside. Code is symbolic. You can read it, check it, test it and edit it, and its describe() states every term and what it means.</p>
+        <p class="para" lang="zh-CN">科学模型可以就是一个程序：规则、方程、算法，只用 numpy 和 scipy，里面没有神经网络。代码是符号化的，可以读、可以查、可以测试、可以改，describe() 会写明每一项及其含义。</p>
+        <p class="goal" lang="en">The goal is to match SOTA networks such as AlphaFold, ESM and MatterGen on their own benchmarks, on the same held-out cases.</p>
+        <p class="goal" lang="zh-CN">目标是在 AlphaFold、ESM、MatterGen 这类 SOTA 网络自己的 benchmark 上，在同样的留出 case 上与它们持平。</p>
+        <ul class="stats">
+          <li><b>176</b><span lang="en">lines in the best program</span><span lang="zh-CN">最好程序的行数</span></li>
+          <li><b>79</b><span lang="en">features in the model</span><span lang="zh-CN">模型里的特征数</span></li>
+          <li><b>0</b><span lang="en">neural networks inside</span><span lang="zh-CN">里面的神经网络</span></li>
+        </ul>
+      </div>
+      <figure class="proof">
+        <div class="pbar k"><span lang="en">Evidence</span><span lang="zh-CN">证据</span><span class="tn">describe()</span></div>
+        <div class="pbody">
           <div class="codewrap"><pre class="code"><code><span class="cm"># describe() of the best program (excerpt)</span>
 score(i, a-&gt;b) =
   x(i) . w_site + x(i) . W[:, b]
@@ -276,25 +405,28 @@ wt=D: ... E<span class="am">+0.13</span> ... N+0.09 ...
 wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
           <p class="cap" lang="en">It learned that isoleucine tolerates leucine and valine, lysine tolerates arginine, aspartate tolerates glutamate and phenylalanine tolerates tyrosine. A higher weight means more tolerated.</p>
           <p class="cap" lang="zh-CN">它学到：异亮氨酸能容忍亮氨酸和缬氨酸，赖氨酸能容忍精氨酸，天冬氨酸能容忍谷氨酸，苯丙氨酸能容忍酪氨酸。权重越高，越能容忍。</p>
-        </figure>
-      </article>
-
-      <article class="pillar">
-        <div class="ptext">
-          <p class="num">ii</p>
-          <h3 class="claim" lang="en"><span class="b">Self-improvement</span> maxes out the code.</h3>
-          <h3 class="claim" lang="zh-CN"><span class="b">自我改进</span>把代码榨到极致。</h3>
-          <p class="para" lang="en">The LLM writes the program. A loop scores every version on held-out data, keeps what holds up and feeds the evidence back. An inner search tunes the knobs at machine speed. The LLM makes the changes a search cannot: new terms and new forms. A new run starts from the best program of the last.</p>
-          <p class="para" lang="zh-CN">LLM 写出程序。循环在留出数据上给每个版本打分，留下站得住的，再把证据交回去。内层搜索按机器速度调旋钮；LLM 做搜索做不到的改动：新的项、新的形式。新的 run 从上一个 run 的最好程序接着做。</p>
-          <p class="goal" lang="en">The aim is code-maxing: the best performance a program can reach.</p>
-          <p class="goal" lang="zh-CN">目标是 code-maxing：让程序能达到的性能最大化。</p>
-          <ul class="stats">
-            <li><b>25</b><span lang="en">evaluations</span><span lang="zh-CN">次评测</span></li>
-            <li><b>2.8 h</b><span lang="en">of wall-clock time</span><span lang="zh-CN">耗时</span></li>
-            <li><b>+0.062</b><span lang="en">Spearman on val, 0.308 to 0.370</span><span lang="zh-CN">val 上的 Spearman，0.308 升到 0.370</span></li>
-          </ul>
         </div>
-        <figure class="proof">
+      </figure>
+    </article>
+
+    <article class="claim-row">
+      <div class="ctext">
+        <p class="k"><span lang="en">Idea II · neural</span><span lang="zh-CN">想法二 · 神经</span></p>
+        <h3 class="claim" lang="en"><span class="b">Self-improvement</span> maxes out the code.</h3>
+        <h3 class="claim" lang="zh-CN"><span class="b">自我改进</span>把代码榨到极致。</h3>
+        <p class="para" lang="en">The LLM writes the program. A loop scores every version on held-out data, keeps what holds up and feeds the evidence back. An inner search tunes the knobs at machine speed. The LLM makes the changes a search cannot: new terms and new forms. A new run starts from the best program of the last.</p>
+        <p class="para" lang="zh-CN">LLM 写出程序。循环在留出数据上给每个版本打分，留下站得住的，再把证据交回去。内层搜索按机器速度调旋钮；LLM 做搜索做不到的改动：新的项、新的形式。新的 run 从上一个 run 的最好程序接着做。</p>
+        <p class="goal" lang="en">The aim is code-maxing: the best performance a program can reach.</p>
+        <p class="goal" lang="zh-CN">目标是 code-maxing：让程序能达到的性能最大化。</p>
+        <ul class="stats">
+          <li><b>25</b><span lang="en">evaluations</span><span lang="zh-CN">次评测</span></li>
+          <li><b>2.8 h</b><span lang="en">of wall-clock time</span><span lang="zh-CN">耗时</span></li>
+          <li><b>+0.062</b><span lang="en">Spearman on val, 0.308 to 0.370</span><span lang="zh-CN">val 上的 Spearman，0.308 升到 0.370</span></li>
+        </ul>
+      </div>
+      <figure class="proof">
+        <div class="pbar k"><span lang="en">Evidence</span><span lang="zh-CN">证据</span><span lang="en">One real run, ESM-2 task</span><span lang="zh-CN">一次真实 run，ESM-2 任务</span></div>
+        <div class="pbody">
           <div class="chartbox" id="chartbox">
             <svg id="chart" class="chart" viewBox="0 0 380 290" data-vbw="380" data-x0="44" data-dx="12.96" role="img" tabindex="0" aria-label="">
               <line class="grid" x1="44.0" x2="368.0" y1="244.0" y2="244.0"/>
@@ -403,16 +535,15 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
               </table>
             </div>
           </details>
-        </figure>
-      </article>
-
-    </div>
+        </div>
+      </figure>
+    </article>
   </div>
 </section>
 
-<section class="loop">
+<section id="loop" aria-labelledby="loop-h">
   <div class="wrap">
-    <h2 lang="en">The loop</h2><h2 lang="zh-CN">循环</h2>
+    <div class="shead"><span class="num">02</span><h2 id="loop-h"><span lang="en">The loop</span><span lang="zh-CN">循环</span></h2></div>
     <p class="sub" lang="en">Every accepted version is the base of the next.</p>
     <p class="sub" lang="zh-CN">每个被接受的版本都是下一版的起点。</p>
     <figure class="loopfig">
@@ -465,9 +596,9 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
   </div>
 </section>
 
-<section class="standing">
+<section id="results" aria-labelledby="results-h">
   <div class="wrap">
-    <h2 lang="en">Where it stands</h2><h2 lang="zh-CN">目前的进展</h2>
+    <div class="shead"><span class="num">03</span><h2 id="results-h"><span lang="en">Where it stands</span><span lang="zh-CN">目前的进展</span></h2></div>
     <p class="sub" lang="en">The best program of each task on the test split, between a classical baseline and the neural network.</p>
     <p class="sub" lang="zh-CN">每个任务里最好的程序在 test 上的表现，位于经典基线和神经网络之间。</p>
     <div class="board" role="table" aria-label="Best program per task against a classical baseline and the neural network">
@@ -481,44 +612,44 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
 
       <div class="brow" role="row">
         <div class="task" role="cell"><b lang="en">Tabular classification</b><b lang="zh-CN">表格数据分类</b><span>ROC AUC</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.872</b><span lang="en">logistic regression</span><span lang="zh-CN">逻辑回归</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.924</b></div>
-        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.931</b><span>TabPFN v2</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.872</b><span lang="en">logistic regression</span><span lang="zh-CN">逻辑回归</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.924</b></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.931</b><span>TabPFN v2</span></div>
         <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes about 90% of the gap" title="(ours - baseline) / (network - baseline), from unrounded scores"><span class="fill" style="width:90%"></span></div><span class="pct" lang="en">about 90%</span><span class="pct" lang="zh-CN">约 90%</span></div>
       </div>
 
       <div class="brow" role="row">
         <div class="task" role="cell"><b lang="en">Mutation effects</b><b lang="zh-CN">突变效应</b><span>Spearman</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.322</b><span lang="en">starting program</span><span lang="zh-CN">起始程序</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.386</b></div>
-        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.445</b><span>ESM-2 650M</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.322</b><span lang="en">starting program</span><span lang="zh-CN">起始程序</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.386</b></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.445</b><span>ESM-2 650M</span></div>
         <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 52% of the gap" title="(0.386 - 0.322) / (0.445 - 0.322)"><span class="fill" style="width:52%"></span></div><span class="pct">52%</span></div>
       </div>
 
       <div class="brow" role="row">
         <div class="task" role="cell"><b lang="en">River flow</b><b lang="zh-CN">河流径流</b><span>median NSE</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.315</b><span>GloFAS</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.444</b></div>
-        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.583</b><span>Google LSTM</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.315</b><span>GloFAS</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.444</b></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.583</b><span>Google LSTM</span></div>
         <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 48% of the gap" title="(0.444 - 0.315) / (0.583 - 0.315)"><span class="fill" style="width:48%"></span></div><span class="pct">48%</span></div>
       </div>
 
       <div class="brow" role="row">
         <div class="task" role="cell"><b lang="en">Crystal stability</b><b lang="zh-CN">晶体稳定性</b><span>F1</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.331</b><span lang="en">Voronoi random forest</span><span lang="zh-CN">Voronoi 随机森林</span></div>
-        <div class="val" role="cell"><span class="k"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.381</b></div>
-        <div class="val" role="cell"><span class="k"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.862</b><span>EquiformerV3</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot"></i><span lang="en">Classical baseline</span><span lang="zh-CN">经典基线</span></span><b>0.331</b><span lang="en">Voronoi random forest</span><span lang="zh-CN">Voronoi 随机森林</span></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot o"></i><span lang="en">Our program</span><span lang="zh-CN">我们的程序</span></span><b>0.381</b></div>
+        <div class="val" role="cell"><span class="k2"><i class="dot n"></i><span lang="en">Neural network</span><span lang="zh-CN">神经网络</span></span><b>0.862</b><span>EquiformerV3</span></div>
         <div class="gap" role="cell"><div class="meter" role="img" aria-label="closes 9% of the gap" title="(0.381 - 0.331) / (0.862 - 0.331)"><span class="fill" style="width:9%"></span></div><span class="pct">9%</span></div>
       </div>
     </div>
-    <p class="fine" lang="en">Gap closed = (ours - baseline) / (network - baseline). First runs on 2026-10-30 and 10-31, one run per cell. The tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric, which was then made strict. ProteinGym and Runs N' Poses have not been run by an agent yet.</p>
-    <p class="fine" lang="zh-CN">缩小的差距 = (我们 - 基线) / (网络 - 基线)。首批 run（2026-10-30 和 10-31），每个格子只有一个 run。表格数据的比例用未取整的分数计算。晶体生成没有列入：它的首批 run 钻了指标的空子，指标随后被改严。ProteinGym 和 Runs N' Poses 还没有 agent 跑过。</p>
+    <p class="fine" lang="en">Gap closed = (ours - baseline) / (network - baseline). First runs, 2026-10-30 to 11-01, one run per cell. The tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric, which was then made strict. ProteinGym and Runs N' Poses have no results yet.</p>
+    <p class="fine" lang="zh-CN">缩小的差距 = (我们 - 基线) / (网络 - 基线)。首批 run（2026-10-30 至 11-01），每个格子只有一个 run。表格数据的比例用未取整的分数计算。晶体生成没有列入：它的首批 run 钻了指标的空子，指标随后被改严。ProteinGym 和 Runs N' Poses 还没有结果。</p>
   </div>
 </section>
 
-<section class="map">
+<section id="tasks" aria-labelledby="tasks-h">
   <div class="wrap">
-    <h2 lang="en">Three directions, seven tasks</h2><h2 lang="zh-CN">三个方向，七个任务</h2>
+    <div class="shead"><span class="num">04</span><h2 id="tasks-h"><span lang="en">Three directions, seven tasks</span><span lang="zh-CN">三个方向，七个任务</span></h2></div>
     <p class="sub" lang="en">Each task pairs a neural SOTA model with the benchmark it was published on.</p>
     <p class="sub" lang="zh-CN">每个任务都对应一个神经网络 SOTA 模型和它发表时用的 benchmark。</p>
     <div class="cols">
@@ -553,8 +684,8 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
 <footer>
   <div class="wrap">
     <span>RSI-Science</span>
-    <span lang="en">First runs: 2026-10-30 and 10-31.</span>
-    <span lang="zh-CN">首批 run：2026-10-30 和 10-31。</span>
+    <span lang="en">First runs: 2026-10-30 to 11-01.</span>
+    <span lang="zh-CN">首批 run：2026-10-30 至 11-01。</span>
   </div>
 </footer>
 
@@ -562,7 +693,8 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
 <script>
 (function () {
   var root = document.documentElement;
-  var btnEn = document.getElementById("b-en"), btnZh = document.getElementById("b-zh");
+  var btnLang = document.getElementById("b-lang"), btnTheme = document.getElementById("b-theme");
+  var iMoon = document.getElementById("i-moon"), iSun = document.getElementById("i-sun");
   var svg = document.getElementById("chart"), box = document.getElementById("chartbox");
   var tip = document.getElementById("tip"), live = document.getElementById("live");
   var cross = svg.querySelector(".cross"), hl = svg.querySelector(".hl");
@@ -642,22 +774,56 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
     show(i);
   });
 
+  function store(key, value) { try { localStorage.setItem(key, value); } catch (err) {} }
+  function load(key) { try { return localStorage.getItem(key); } catch (err) { return null; } }
+
   function setLang(l, save) {
     root.setAttribute("data-lang", l);
     root.lang = l === "zh" ? "zh-CN" : "en";
-    btnEn.setAttribute("aria-pressed", l === "en" ? "true" : "false");
-    btnZh.setAttribute("aria-pressed", l === "zh" ? "true" : "false");
     svg.setAttribute("aria-label", words().chart);
     if (cur >= 0) fill(cur);
-    if (save) { try { localStorage.setItem("rsi-lang", l); } catch (err) {} }
+    if (save) store("rsi-lang", l);
   }
-  btnEn.addEventListener("click", function () { setLang("en", true); });
-  btnZh.addEventListener("click", function () { setLang("zh", true); });
+  btnLang.addEventListener("click", function () { setLang(lang() === "zh" ? "en" : "zh", true); });
 
-  var saved = null;
-  try { saved = localStorage.getItem("rsi-lang"); } catch (err) {}
+  var dark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : { matches: false };
+  function effective() { return root.getAttribute("data-theme") || (dark.matches ? "dark" : "light"); }
+  function paintTheme() {
+    var isDark = effective() === "dark";
+    if (isDark) { iMoon.setAttribute("hidden", ""); iSun.removeAttribute("hidden"); }
+    else { iSun.setAttribute("hidden", ""); iMoon.removeAttribute("hidden"); }
+  }
+  btnTheme.addEventListener("click", function () {
+    var next = effective() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    store("rsi-theme", next);
+    paintTheme();
+  });
+  if (dark.addEventListener) dark.addEventListener("change", paintTheme);
+  var savedTheme = load("rsi-theme");
+  if (savedTheme === "light" || savedTheme === "dark") root.setAttribute("data-theme", savedTheme);
+  paintTheme();
+
+  var saved = load("rsi-lang");
   var nav = (navigator.language || "").toLowerCase();
   setLang(saved === "zh" || saved === "en" ? saved : (nav.indexOf("zh") === 0 ? "zh" : "en"), false);
+
+  // the nav marks the section that crosses the middle of the window
+  var links = {};
+  [].forEach.call(document.querySelectorAll(".links a"), function (a) { links[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var a = links[en.target.id];
+        if (!a) return;
+        if (en.isIntersecting) {
+          Object.keys(links).forEach(function (k) { links[k].removeAttribute("aria-current"); });
+          a.setAttribute("aria-current", "true");
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(links).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+  }
 })();
 </script>
 </body>
