@@ -643,9 +643,9 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
     <p class="fine" lang="en">Gap closed = (ours − baseline) / (network − baseline); one run per cell, first runs 2026-10-30 to 11-01; the tabular figure uses unrounded scores. Crystal generation is left out: its first runs gamed the metric. <b>ProteinGym</b> learns from other proteins' assays, while the leaderboard's models are zero-shot; it also beats ESM-2 650M (0.435) and GEMME (0.433). <b>Runs N' Poses</b> redocks around the known pocket, easier than co-folding from sequence; Chai-1 and Boltz-1x reach 59.1% and 59.6%.</p>
     <p class="fine" lang="zh-CN">缩小的差距 = (我们 − 基线) / (网络 − 基线)；每格一个 run，首批 run 为 2026-10-30 至 11-01；表格数据的比例用未取整的分数。晶体生成没有列入：它的首批 run 钻了指标的空子。<b>ProteinGym</b> 从其他蛋白的 assay 学习，榜单上的模型是 zero-shot；它也超过了 ESM-2 650M（0.435）和 GEMME（0.433）。<b>Runs N' Poses</b> 围绕已知口袋重新对接，比从序列共折叠容易；Chai-1 和 Boltz-1x 是 59.1% 和 59.6%。</p>
     <details class="tbl runs">
-      <summary><span lang="en">Every run: 19 runs, 455 evaluated versions</span><span lang="zh-CN">全部 run：19 个 run，共 455 个评测过的版本</span></summary>
-      <p class="fine" lang="en">One row per run, best version scored once on test. On mutation effects two runs differ by about 0.005 to 0.010 on test by chance, so neighbouring rows cannot be ranked. Three of the four tabular runs skipped the inner loop almost always; the river-flow search only evaluated the starting configuration. Six crystal-generation runs are left out.</p>
-      <p class="fine" lang="zh-CN">每个 run 一行，最好的版本在 test 上只打一次分。突变效应任务里两个 run 在 test 上相差约 0.005 到 0.010 是随机的，相邻的行排不出名次。表格数据的四个 run 里有三个几乎总是跳过内循环；河流径流的搜索只评测了起始配置。六个晶体生成 run 没有列入。</p>
+      <summary><span lang="en">Every run: 20 runs, 478 evaluated versions</span><span lang="zh-CN">全部 run：20 个 run，共 478 个评测过的版本</span></summary>
+      <p class="fine" lang="en">One row per run, best version scored once on test. On mutation effects two runs differ by about 0.005 to 0.010 on test by chance, so neighbouring rows cannot be ranked. Three of the four tabular runs skipped the inner loop almost always; the river-flow search only evaluated the starting configuration. On crystal stability the Codex run is below the classical baseline. Six crystal-generation runs are left out.</p>
+      <p class="fine" lang="zh-CN">每个 run 一行，最好的版本在 test 上只打一次分。突变效应任务里两个 run 在 test 上相差约 0.005 到 0.010 是随机的，相邻的行排不出名次。表格数据的四个 run 里有三个几乎总是跳过内循环；河流径流的搜索只评测了起始配置。晶体稳定性上，Codex 的 run 低于经典基线。六个晶体生成 run 没有列入。</p>
       <div class="tbl-scroll">
         <table>
           <thead><tr>
@@ -682,6 +682,7 @@ wt=F: ... W+0.09 Y<span class="am">+0.14</span> ...</code></pre></div>
             <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.444</b></td><td class="n">48%</td><td class="n">5</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
             <tr class="grp"><th colspan="6"><span lang="en">Crystal stability</span><span lang="zh-CN">晶体稳定性</span><span class="u">Matbench Discovery, F1; <span lang="en">start</span><span lang="zh-CN">起点</span> 0.331, <span lang="en">network</span><span lang="zh-CN">网络</span> 0.862</span></th></tr>
             <tr><td>Claude Code · Opus 5.5</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.381</b></td><td class="n">9%</td><td class="n">18</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
+            <tr><td>Codex · gpt-6.1-terra</td><td><span lang="en">data</span><span lang="zh-CN">数据</span></td><td class="n"><b>0.316</b></td><td class="n">-3%</td><td class="n">23</td><td><span lang="en">before every evaluation</span><span lang="zh-CN">每次评测前</span></td></tr>
           </tbody>
         </table>
       </div>
