@@ -106,13 +106,15 @@ p{margin:0}
   .expand i{display:none}
 }
 @media(max-width:519px){.expand{letter-spacing:.12em;font-size:11px}}
-.title{margin:0;max-width:30ch;font:400 clamp(25px,3.2vw,38px)/1.22 var(--disp);letter-spacing:-.008em;text-wrap:balance}
+.hero-head{margin-top:clamp(24px,3.2vw,36px)}
+.title{margin:0;font:400 clamp(25px,3.2vw,38px)/1.22 var(--disp);letter-spacing:-.008em;text-wrap:balance}
 .nb{white-space:nowrap}
 .t-n{color:var(--neural)} .t-s{color:var(--symbolic-text)}
 .title-zh{margin:10px 0 0;font:500 clamp(17px,2vw,21px)/1.5 var(--disp);color:var(--ink-2)}
 :root:not([data-lang="zh"]) .title-zh[lang="zh-CN"]{display:block!important}   /* the Chinese title shows in both languages */
-.lede{margin:18px 0 0;max-width:62ch;color:var(--ink-2);font-size:18px;line-height:1.6}
-.latest{margin:clamp(26px,3.4vw,36px) 0 0;padding:14px 0 0;border-top:1px solid var(--rule)}
+.lede{margin:0;max-width:62ch;color:var(--ink-2);font-size:18px;line-height:1.6}
+.lede[lang="en"]{text-wrap:pretty}
+.latest{margin:clamp(22px,3vw,30px) 0 0}
 .latest ul{margin:8px 0 0;padding:0;list-style:none}
 .latest li{display:grid;grid-template-columns:minmax(0,1fr) auto 64px;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--rule)}
 .latest .lt{font-weight:500;color:var(--ink)}
@@ -127,9 +129,8 @@ p{margin:0}
 }
 .lnote{margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--ink-3)}
 .lnote a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(30px,4.4vw,44px);margin-top:clamp(24px,3.2vw,36px)}
-@media(min-width:980px){.hero-grid>div:last-child{align-self:center}
-.hero-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(40px,6vw,88px);align-items:start}}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(26px,4vw,40px);margin-top:clamp(18px,2.4vw,26px)}
+@media(min-width:980px){.hero-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center;gap:clamp(40px,6vw,88px)}}
 .thesis{margin:0;padding:4px 0 4px clamp(18px,2.4vw,26px);font:400 clamp(24px,2.7vw,32px)/1.3 var(--disp);letter-spacing:-.008em;
   border-left:3px solid var(--rule-2);border-image:linear-gradient(to bottom,var(--symbolic),var(--neural)) 1}
 .thesis .ln{display:block}
@@ -352,26 +353,19 @@ footer a{color:var(--ink-2)}
       <h1 class="wordmark" id="name">RSI-Science</h1>
       <p class="expand"><span lang="en"><span>Recursive</span><i> · </i><span>Self-improvement</span><i> · </i><span>Science</span></span><span lang="zh-CN"><span>递归</span><i> · </i><span>自我改进</span><i> · </i><span>科学</span></span></p>
     </div>
+    <div class="hero-head">
+      <p class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive <span class="nb">Self-Improvement</span> for Interpretable Science Discovery</p>
+      <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
+    </div>
     <div class="hero-grid">
       <div>
-        <p class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive <span class="nb">Self-Improvement</span> for Interpretable Science Discovery</p>
-        <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
-        <p class="lede" lang="en">The LLM is the neural part and writes code. The code is the symbolic part and is <span class="nb">the scientific model.</span></p>
+        <p class="lede" lang="en">The LLM is the neural part and writes code. The code is the symbolic part and is the scientific model.</p>
         <p class="lede" lang="zh-CN">LLM 是 neural 部分，负责写代码；代码是 symbolic 部分，<span class="nb">就是最终的科学模型。</span></p>
       </div>
       <div>
         <p class="thesis" lang="en"><span class="ln"><span class="a">Code</span> is enough.</span><span class="ln"><span class="b">Self-improvement</span> maxes out the code.</span></p>
         <p class="thesis" lang="zh-CN"><span class="ln"><span class="a">代码</span>就够了。</span><span class="ln"><span class="b">自我改进</span>把代码榨到极致。</span></p>
       </div>
-    </div>
-    <div class="latest">
-      <p class="k"><span lang="en">Latest, on the test split</span><span lang="zh-CN">最新结果，test 上</span></p>
-      <ul>
-        <li><span class="lt">Runs N' Poses</span><span class="lr">AlphaFold 3 64.3%</span><b>72.1%</b></li>
-        <li><span class="lt" lang="en">Tabular</span><span class="lt" lang="zh-CN">表格数据</span><span class="lr">TabPFN v2 0.931</span><b>0.924</b></li>
-        <li><span class="lt">ProteinGym</span><span class="lr">VenusREM 0.537</span><b>0.514</b></li>
-      </ul>
-      <p class="lnote"><span lang="en">Against the strongest network; protocols differ, see <a href="#results">Where it stands</a>.</span><span lang="zh-CN">我们的程序对比最强的网络；协议有差别，见<a href="#results">目前的进展</a>。</span></p>
     </div>
     <dl class="gloss">
       <div><dt><i class="sw n"></i><span lang="en">Neural</span><span lang="zh-CN">神经</span></dt>
@@ -384,6 +378,15 @@ footer a{color:var(--ink-2)}
         <dd lang="en">Every accepted version is the base of the next, and a new run can start from the best program of an earlier one.</dd>
         <dd lang="zh-CN">每个被接受的版本都是下一版的起点，新的 run 也可以从更早 run 的最好程序开始。</dd></div>
     </dl>
+    <div class="latest">
+      <p class="k"><span lang="en">Latest, on the test split</span><span lang="zh-CN">最新结果，test 上</span></p>
+      <ul>
+        <li><span class="lt">Runs N' Poses</span><span class="lr">AlphaFold 3 64.3%</span><b>72.1%</b></li>
+        <li><span class="lt" lang="en">Tabular</span><span class="lt" lang="zh-CN">表格数据</span><span class="lr">TabPFN v2 0.931</span><b>0.924</b></li>
+        <li><span class="lt">ProteinGym</span><span class="lr">VenusREM 0.537</span><b>0.514</b></li>
+      </ul>
+      <p class="lnote"><span lang="en">Against the strongest network; protocols differ, see <a href="#results">Where it stands</a>.</span><span lang="zh-CN">我们的程序对比最强的网络；协议有差别，见<a href="#results">目前的进展</a>。</span></p>
+    </div>
   </div>
 </section>
 
