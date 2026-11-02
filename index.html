@@ -102,21 +102,6 @@ p{margin:0}
 .t-n{color:var(--neural)} .t-s{color:var(--symbolic-text)}
 .title-zh{margin:10px 0 0;font:500 clamp(17px,2vw,21px)/1.5 var(--disp);color:var(--ink-2)}
 :root:not([data-lang="zh"]) .title-zh[lang="zh-CN"]{display:block!important}   /* the Chinese title shows in both languages */
-.latest{margin:clamp(22px,3vw,30px) 0 0}
-.latest ul{margin:8px 0 0;padding:0;list-style:none}
-.latest li{display:grid;grid-template-columns:minmax(0,1fr) auto 64px;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--rule)}
-.latest .lt{font-weight:500;color:var(--ink)}
-.latest .lr{font-size:13px;color:var(--ink-3);text-align:right}
-.latest b{font:600 19px/1 var(--body);letter-spacing:-.02em;color:var(--symbolic-text);text-align:right}
-@media(min-width:720px){
-  .latest ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 clamp(20px,3.4vw,44px)}
-  .latest li{grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:6px 0 12px}
-  .latest .lt{grid-area:1/1}
-  .latest .lr{grid-area:2/1;text-align:left}
-  .latest b{grid-area:1/2/3/3;align-self:center;font-size:26px}
-}
-.lnote{margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--ink-3)}
-.lnote a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(26px,4vw,40px);margin-top:clamp(18px,2.4vw,26px)}
 @media(min-width:780px){.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:clamp(28px,4vw,56px)}}
 .lede,.thesis{height:100%;box-sizing:border-box;margin:0;padding:4px 0 4px clamp(18px,2.4vw,26px);font:400 clamp(20px,2.1vw,25px)/1.35 var(--disp);
@@ -366,15 +351,6 @@ footer a{color:var(--ink-2)}
         <dd lang="en">Every accepted version is the base of the next, and a new run can start from the best program of an earlier one.</dd>
         <dd lang="zh-CN">每个被接受的版本都是下一版的起点，新的 run 也可以从更早 run 的最好程序开始。</dd></div>
     </dl>
-    <div class="latest">
-      <p class="k"><span lang="en">Latest, on the test split</span><span lang="zh-CN">最新结果，test 上</span></p>
-      <ul>
-        <li><span class="lt">Runs N' Poses</span><span class="lr">AlphaFold 3 64.3%</span><b>72.1%</b></li>
-        <li><span class="lt" lang="en">Tabular</span><span class="lt" lang="zh-CN">表格数据</span><span class="lr">TabPFN v2 0.931</span><b>0.924</b></li>
-        <li><span class="lt">ProteinGym</span><span class="lr">VenusREM 0.537</span><b>0.514</b></li>
-      </ul>
-      <p class="lnote"><span lang="en">Against the strongest network; protocols differ, see <a href="#results">Where it stands</a>.</span><span lang="zh-CN">我们的程序对比最强的网络；协议有差别，见<a href="#results">目前的进展</a>。</span></p>
-    </div>
   </div>
 </section>
 
