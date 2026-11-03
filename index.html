@@ -100,8 +100,6 @@ p{margin:0}
 .title{margin:0;font:400 clamp(25px,3.2vw,38px)/1.22 var(--disp);letter-spacing:-.008em;text-wrap:balance}
 .nb{white-space:nowrap}
 .t-n{color:var(--neural)} .t-s{color:var(--symbolic-text)}
-.title-zh{margin:10px 0 0;font:500 clamp(17px,2vw,21px)/1.5 var(--disp);color:var(--ink-2)}
-:root:not([data-lang="zh"]) .title-zh[lang="zh-CN"]{display:block!important}   /* the Chinese title shows in both languages */
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(26px,4vw,40px);margin-top:clamp(18px,2.4vw,26px)}
 @media(min-width:780px){.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:clamp(28px,4vw,56px)}}
 .lede,.thesis{height:100%;box-sizing:border-box;margin:0;padding:4px 0 4px clamp(18px,2.4vw,26px);font:400 clamp(20px,2.1vw,25px)/1.35 var(--disp);
@@ -327,8 +325,8 @@ footer a{color:var(--ink-2)}
       <h1 class="wordmark" id="name">RSI-Science</h1>
     </div>
     <div class="hero-head">
-      <p class="title"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive <span class="nb">Self-Improvement</span> for Interpretable Science Discovery</p>
-      <p class="title-zh" lang="zh-CN">面向可解释科学发现的神经符号递归自我改进</p>
+      <p class="title" lang="en"><span class="nb"><span class="t-n">Neural</span>-<span class="t-s">Symbolic</span></span> Recursive <span class="nb">Self-Improvement</span> for Interpretable Science Discovery</p>
+      <p class="title" lang="zh-CN">面向可解释科学发现的<span class="nb"><span class="t-n">神经</span><span class="t-s">符号</span>递归自我改进</span></p>
     </div>
     <div class="hero-grid">
       <div>
